@@ -23,6 +23,7 @@
         </DataTemplate>
     </Window.Resources>
 
+    
     <Grid x:Name="WebView2Grid">
         <TabControl x:Name="TabContainer" 
                     ItemsSource="{Binding Tabs}"
