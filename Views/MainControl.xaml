@@ -1,0 +1,38 @@
+﻿<Window x:Class="RevitAssist.MainControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:local="clr-namespace:RevitAssist"
+        mc:Ignorable="d"
+        d:DesignHeight="550" d:DesignWidth="400"
+        Height="550"
+        Width="400"
+        
+        Topmost="true">
+    <Window.Resources>
+        <DataTemplate x:Key="TabItemTemplate">
+            <wv2:WebView2
+                Source="{Binding Url}"
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"
+                Loaded="WebView2Loaded"
+                Tag="{Binding}">
+            </wv2:WebView2>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid x:Name="WebView2Grid">
+        <TabControl x:Name="TabContainer" 
+                    ItemsSource="{Binding Tabs}"
+                    ContentTemplate="{StaticResource TabItemTemplate}"
+                    IsSynchronizedWithCurrentItem="False">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Header" Value="{Binding Title}" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>
+    </Grid>
+</Window>
