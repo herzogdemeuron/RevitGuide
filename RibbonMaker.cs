@@ -25,7 +25,7 @@ namespace RevitAssist
             RibbonPanel panel = uiCtrlApp.CreateRibbonPanel(TabName, "GENERAL");
             PushButtonData buttonData = new PushButtonData(
                 "RevitAssistButton",
-                "Revit Assist",
+                "Revit Guide",
                 Assembly.GetExecutingAssembly().Location,
                 "RevitAssist.MainWindowButton");
             PushButton button = panel.AddItem(buttonData) as PushButton;
