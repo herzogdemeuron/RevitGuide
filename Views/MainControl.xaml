@@ -9,9 +9,9 @@
         d:DesignHeight="550" d:DesignWidth="400"
         Height="550"
         Width="400"
-        
         Topmost="true">
     <Window.Resources>
+        
         <DataTemplate x:Key="TabItemTemplate">
             <wv2:WebView2
                 Source="{Binding Url}"
@@ -21,19 +21,20 @@
                 Tag="{Binding}">
             </wv2:WebView2>
         </DataTemplate>
+        
+        <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
+            <Setter Property="Header" Value="{Binding Title}" />
+        </Style>
+        
     </Window.Resources>
 
     
     <Grid x:Name="WebView2Grid">
         <TabControl x:Name="TabContainer" 
-                    ItemsSource="{Binding Tabs}"
+                    ItemsSource="{Binding}"
                     ContentTemplate="{StaticResource TabItemTemplate}"
+                    ItemContainerStyle="{StaticResource TabItemStyle}"
                     IsSynchronizedWithCurrentItem="False">
-            <TabControl.ItemContainerStyle>
-                <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="Header" Value="{Binding Title}" />
-                </Style>
-            </TabControl.ItemContainerStyle>
         </TabControl>
     </Grid>
 </Window>
