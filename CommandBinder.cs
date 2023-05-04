@@ -17,8 +17,10 @@ namespace RevitAssist
 
         public static Dictionary<PostableCommand, string> PostableCommandDict = new Dictionary<PostableCommand, string>()
         {
-            { PostableCommand.Filters , "https://www.youtube.com/watch?v=_EGaTbs5olM" },
-            { PostableCommand.VisibilityOrGraphics , "https://camilion.eu/en/blog/2021-revit-30-reasons-if-you-cant-see-an-object/" }
+            { PostableCommand.Filters , "https://www.youtube.com/embed/_EGaTbs5olM" },
+            { PostableCommand.VisibilityOrGraphics , "https://camilion.eu/en/blog/2021-revit-30-reasons-if-you-cant-see-an-object/" },
+            { PostableCommand.ExportIFC , @"file:///U:/Kejun_L/_934_DT/230426_RevitAssist/pdfs/IFC.pdf" }
+            
         };
 
 
@@ -31,7 +33,7 @@ namespace RevitAssist
                 {
                     RevitCommandId commandId = RevitCommandId.LookupPostableCommandId(item.Key);
                     AddInCommandBinding commandBinding = RevitApp.UIControlledApp.CreateAddInCommandBinding(commandId);
-
+                    
                     void BeforeCommandExecute(object sender, BeforeExecutedEventArgs e)
                     {
                         try

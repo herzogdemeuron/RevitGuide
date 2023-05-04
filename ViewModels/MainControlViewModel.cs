@@ -28,9 +28,9 @@ namespace RevitAssist
         {
             Debug.WriteLine("Main Control: creating, start adding tabs");
             Tabs = new ObservableCollection<TabItemViewModel>();
-            AddTab("https://climbing-college-eff.notion.site/DT-BIM-Manual-WIP-fd16016d4aa143599422cd3409b3f7a8", "HdM Manual");
+            AddTab("https://herzogdemeuronnet.sharepoint.com/sites/934_DT/SitePages/BIM-Guide.aspx", "HdM");
             AddTab("https://climbing-college-eff.notion.site/537-BAP-light-c3a4f474d3834062943a1e6b4510c335", "537");
-            AddTab("https://www.google.com", "Live");
+            AddTab(@"file://///hersrv01/Benutzer/Kejun_L/_934_DT/230426_RevitAssist/pdfs/live_assist_defalut.html", "Live Assist");
             Debug.WriteLine("Main Control: all tabs added");
 
             SelectedTab = Tabs.FirstOrDefault();

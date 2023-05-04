@@ -17,48 +17,43 @@ namespace RevitAssist
 {
     public class WebView2Model : INotifyPropertyChanged
     {
-        public TabItemViewModel TabItem { get; set; }
+        public TabItemViewModel TabItemModel { get; set; }
         public WebView2 WebView2 { get; set; }
 
         public WebView2Model(TabItemViewModel tabItemModel)
         {
             Debug.WriteLine("creating webv2model instance");
-            TabItem = tabItemModel;
+            TabItemModel = tabItemModel;
             InitializeWebView2Async();
-        }
+        } 
 
         public async void InitializeWebView2Async()
         {
             Debug.WriteLine("initing webv2 in the model");
-            string userDataFolderPath = @"C:\CustomUserDataFolder\" + TabItem.Title;
+            string userDataFolderPath = @"C:\CustomUserDataFolder\" + TabItemModel.Title;
 
             WebView2 = new WebView2()
             {
+                //Tag = this,
                 CreationProperties = new CoreWebView2CreationProperties()
                 {
                     UserDataFolder = userDataFolderPath
                 }
             };
             Debug.WriteLine(" webv2 in the model created");
-            WebView2.CoreWebView2InitializationCompleted += WebView2_CoreWebView2InitializationCompleted;
+            var environment = await CoreWebView2Environment.CreateAsync(null, userDataFolderPath, new CoreWebView2EnvironmentOptions("--kiosk-printing"));
+            await WebView2.EnsureCoreWebView2Async(environment);
+            Debug.WriteLine(" webv2 init ensured");
+            WebView2.Source = TabItemModel.Url;
+            WebView2.ZoomFactor = 0.7f;
 
-            // Ensure WebView2 is initialized asynchronously
-            await WebView2.EnsureCoreWebView2Async(null);
+            if (TabItemModel.Title == "Live Assist")
+            {
+                CommandBinder.WebView = WebView2;
+            }
+
         }
 
-        private void WebView2_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
-        {
-            Debug.WriteLine("CoreWebView2InitializationCompleted triggered");
-            if (!e.IsSuccess)
-            {
-                Debug.WriteLine($"Error initializing WebView2: {e.InitializationException}");
-            }
-            else
-            {
-                WebView2.Source = TabItem.Url;
-                WebView2.ZoomFactor = 0.5f;
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
