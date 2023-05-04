@@ -15,21 +15,16 @@ namespace RevitAssist
 {
     public partial class MainControl : Window
     {
-        private readonly WebView2Model _webView2Model = new WebView2Model();
+        
         public MainControl()
         {
-            InitializeComponent();
+            Debug.WriteLine("Main Control called");
             DataContext = new MainControlViewModel();
+            InitializeComponent();
+            
         }
 
-        private async void WebView2Loaded(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("WebView2Loaded called");
-            WebView2 webView2 = sender as WebView2;
-            TabItemViewModel viewModel = webView2.Tag as TabItemViewModel;
-            Debug.WriteLine(viewModel.Title);
-            await _webView2Model.InitializeWebView2Async(webView2, viewModel);
-        }
+
     }
 }
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
@@ -10,28 +12,52 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
 namespace RevitAssist
 {
     public class WebView2Model : INotifyPropertyChanged
     {
-      
         public TabItemViewModel TabItem { get; set; }
+        public WebView2 WebView2 { get; set; }
 
-        public async Task InitializeWebView2Async(WebView2 webView2, TabItemViewModel viewModel)
+        public WebView2Model(TabItemViewModel tabItemModel)
         {
-            TabItem = viewModel;
-            TabItem.WebView = webView2;
-            
+            Debug.WriteLine("creating webv2model instance");
+            TabItem = tabItemModel;
+            InitializeWebView2Async();
+        }
+
+        public async void InitializeWebView2Async()
+        {
+            Debug.WriteLine("initing webv2 in the model");
             string userDataFolderPath = @"C:\CustomUserDataFolder\" + TabItem.Title;
-            CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions(userDataFolderPath);
-            CoreWebView2Environment environment = await CoreWebView2Environment.CreateAsync(null, userDataFolderPath, options);
-            await webView2.EnsureCoreWebView2Async(environment);
-            webView2.ZoomFactor = 0.5f;
-            if(viewModel.Title == "Live")
+
+            WebView2 = new WebView2()
             {
-              CommandBinder.WebView = webView2;
+                CreationProperties = new CoreWebView2CreationProperties()
+                {
+                    UserDataFolder = userDataFolderPath
+                }
+            };
+            Debug.WriteLine(" webv2 in the model created");
+            WebView2.CoreWebView2InitializationCompleted += WebView2_CoreWebView2InitializationCompleted;
+
+            // Ensure WebView2 is initialized asynchronously
+            await WebView2.EnsureCoreWebView2Async(null);
+        }
+
+        private void WebView2_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
+        {
+            Debug.WriteLine("CoreWebView2InitializationCompleted triggered");
+            if (!e.IsSuccess)
+            {
+                Debug.WriteLine($"Error initializing WebView2: {e.InitializationException}");
             }
-            
+            else
+            {
+                WebView2.Source = TabItem.Url;
+                WebView2.ZoomFactor = 0.5f;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -10,31 +10,21 @@
         Height="550"
         Width="400"
         Topmost="true">
-    <Window.Resources>
-        
-        <DataTemplate x:Key="TabItemTemplate">
-            <wv2:WebView2
-                Source="{Binding Url}"
-                HorizontalAlignment="Stretch" 
-                VerticalAlignment="Stretch"
-                Loaded="WebView2Loaded"
-                Tag="{Binding}">
-            </wv2:WebView2>
-        </DataTemplate>
-        
-        <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
-            <Setter Property="Header" Value="{Binding Title}" />
-        </Style>
-        
-    </Window.Resources>
 
-    
     <Grid x:Name="WebView2Grid">
-        <TabControl x:Name="TabContainer" 
-                    ItemsSource="{Binding}"
-                    ContentTemplate="{StaticResource TabItemTemplate}"
-                    ItemContainerStyle="{StaticResource TabItemStyle}"
-                    IsSynchronizedWithCurrentItem="False">
+        <TabControl x:Name="TabContainer"
+                    ItemsSource="{Binding Tabs}"
+                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding WebView}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
     </Grid>
 </Window>
