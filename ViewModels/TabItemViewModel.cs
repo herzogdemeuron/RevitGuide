@@ -11,7 +11,7 @@ using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using System.Windows.Controls;
 
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
     public class TabItemViewModel : INotifyPropertyChanged
     {

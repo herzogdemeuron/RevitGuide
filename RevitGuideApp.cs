@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
-    public class RevitAssistApp : IExternalApplication
+    public class RevitGuideApp : IExternalApplication
     {
         public Result OnStartup(UIControlledApplication application)
         {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RevitAssist")]
+[assembly: AssemblyTitle("RevitGuide")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HdM")]
-[assembly: AssemblyProduct("RevitAssist")]
+[assembly: AssemblyProduct("RevitGuide")]
 [assembly: AssemblyCopyright("Copyright © HdM 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

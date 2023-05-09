@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
     [Transaction(TransactionMode.ReadOnly)]
     public class MainWindowButton : IExternalCommand

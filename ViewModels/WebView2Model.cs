@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 
 
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
     public class WebView2Model : INotifyPropertyChanged
     {
@@ -47,7 +47,7 @@ namespace RevitAssist
             WebView2.Source = TabItemModel.Url;
             WebView2.ZoomFactor = 0.7f;
 
-            if (TabItemModel.Title == "Live Assist")
+            if (TabItemModel.Title == "Live Guide")
             {
                 CommandBinder.WebView = WebView2;
             }

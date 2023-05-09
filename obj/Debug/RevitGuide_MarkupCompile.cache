@@ -1,18 +1,18 @@
-﻿RevitAssist
+﻿RevitGuide
 
 
 library
 C#
 .cs
 C:\source\RevitAssist\obj\Debug\
-RevitAssist
+RevitAssist.RevitGuide
 none
 false
 DEBUG;TRACE
 
 11944481602
 1-633714726
-10135763595
+10-343831020
 18599353850
 Views\MainControl.xaml;
 

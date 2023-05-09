@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
     public class MainControlViewModel : INotifyPropertyChanged
     {
@@ -30,7 +30,7 @@ namespace RevitAssist
             Tabs = new ObservableCollection<TabItemViewModel>();
             AddTab("https://herzogdemeuronnet.sharepoint.com/sites/934_DT/SitePages/BIM-Guide.aspx", "HdM");
             AddTab("https://climbing-college-eff.notion.site/537-BAP-light-c3a4f474d3834062943a1e6b4510c335", "537");
-            AddTab(@"file://///hersrv01/Benutzer/Kejun_L/_934_DT/230426_RevitAssist/pdfs/live_assist_defalut.html", "Live Assist");
+            AddTab(@"file://///hersrv01/Benutzer/Kejun_L/_934_DT/230426_RevitAssist/pdfs/live_assist_default.html", "Live Guide");
             Debug.WriteLine("Main Control: all tabs added");
 
             SelectedTab = Tabs.FirstOrDefault();

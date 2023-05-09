@@ -7,8 +7,8 @@
     <ProjectGuid>{5678AC47-5FF1-4191-B374-9D19D2EC4E2B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RevitAssist</RootNamespace>
-    <AssemblyName>RevitAssist</AssemblyName>
+    <RootNamespace>RevitAssist.RevitGuide</RootNamespace>
+    <AssemblyName>RevitGuide</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -71,7 +71,7 @@
     <Compile Include="Views\MainControl.xaml.cs">
       <DependentUpon>MainControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RevitAssistApp.cs" />
+    <Compile Include="RevitGuideApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\TabItemViewModel.cs" />
     <Compile Include="ViewModels\MainControlViewModel.cs" />

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
     public static class RevitApp
     {

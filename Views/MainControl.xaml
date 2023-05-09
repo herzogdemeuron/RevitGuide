@@ -1,31 +1,91 @@
-﻿<Window x:Class="RevitAssist.MainControl"
+﻿<Window x:Class="RevitAssist.RevitGuide.MainControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        xmlns:local="clr-namespace:RevitAssist"
+        xmlns:local="clr-namespace:RevitAssist.RevitGuide"
         mc:Ignorable="d"
         d:DesignHeight="550" d:DesignWidth="400"
         Height="600"
         Width="400"
         Topmost="true"
-        Title="Revit Guide">
+        Title="Revit Guide"
+        
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip"
+        BorderThickness="1"
+        BorderBrush="#00FFFFFF" 
+        AllowsTransparency="True"
+        Background="#00FFFFFF"
+        WindowStyle="None">
 
-    <Grid x:Name="WebView2Grid">
-        <TabControl x:Name="TabContainer"
+    <Window.Resources>
+        <Style TargetType="{x:Type ResizeGrip}">
+            <Setter Property="Margin"  Value="8"/>
+        </Style>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="ContentTemplate">
+              <Setter.Value>
+                <DataTemplate>
+                  <ContentPresenter Content="{Binding}" Margin="0,-1,0,0"/>
+                </DataTemplate>
+              </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border 
+        Background="WhiteSmoke"
+        Margin="10"
+        BorderBrush="DarkGray"
+		BorderThickness="1"
+        UseLayoutRounding="True">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.25"/>
+        </Border.Effect>
+        
+        <Grid x:Name="WebView2Grid" Margin="5">
+            
+            <StackPanel Height="20"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                
+                <Button Content="⚙"
+                        Click="OnCloseClicked"
+                        Margin="0,0,3,0"/>
+
+                <Button Content="✕"
+                        Click="OnCloseClicked"/>
+            </StackPanel>
+            
+
+            <TabControl x:Name="TabContainer"
+                        Margin="0,20,0,0"
                     ItemsSource="{Binding Tabs}"
                     SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
+                
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
             </TabControl.ItemTemplate>
+                
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <ContentControl Content="{Binding WebView}" />
                 </DataTemplate>
             </TabControl.ContentTemplate>
+                
         </TabControl>
+            
     </Grid>
+
+    </Border>
 </Window>
+    

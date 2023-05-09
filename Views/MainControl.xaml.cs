@@ -9,9 +9,9 @@ using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
-
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
     public partial class MainControl : Window
     {
@@ -22,6 +22,19 @@ namespace RevitAssist
             DataContext = new MainControlViewModel();
             InitializeComponent();
             
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            // Begin dragging the window
+            this.DragMove();
+        }
+
+        private void OnCloseClicked(object sender, RoutedEventArgs e)
+        { 
+            this.Close();
         }
 
 

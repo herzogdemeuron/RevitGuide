@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 
-namespace RevitAssist
+namespace RevitAssist.RevitGuide
 {
     public class RibbonMaker
     {
@@ -27,9 +27,9 @@ namespace RevitAssist
                 "RevitAssistButton",
                 "Revit Guide",
                 Assembly.GetExecutingAssembly().Location,
-                "RevitAssist.MainWindowButton");
+                "RevitAssist.RevitGuide.MainWindowButton");
             PushButton button = panel.AddItem(buttonData) as PushButton;
-            Uri uriImage = new Uri("pack://application:,,,/RevitAssist;component/Resources/icon.png", UriKind.Absolute);
+            Uri uriImage = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
             button.LargeImage = new BitmapImage(uriImage);
 
         }
