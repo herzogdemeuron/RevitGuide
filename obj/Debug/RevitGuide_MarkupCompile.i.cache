@@ -4,17 +4,17 @@
 library
 C#
 .cs
-C:\source\RevitAssist\obj\Debug\
-RevitAssist.RevitGuide
+C:\source\RevitGuide\obj\Debug\
+RevitGuide
 none
 false
 DEBUG;TRACE
 
-11944481602
-1-633714726
-111577947101
-18599353850
-Views\MainControl.xaml;
+2-1941457852
+1646013753
+17999002763
+19274368872
+Views\MainWindow.xaml;Views\SettingsWindow.xaml;
 
-True
+False
 

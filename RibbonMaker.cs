@@ -1,38 +1,56 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Autodesk.Revit.UI;
 
-namespace RevitAssist.RevitGuide
+namespace RevitGuide
 {
     public class RibbonMaker
     {
-        string TabName = "HdM";
-
-
-        public void Create(UIControlledApplication uiCtrlApp)
+        public static void Create(UIControlledApplication uiCtrlApp, string tabName, string panelName)
         {
-            List<RibbonPanel> panelList = uiCtrlApp.GetRibbonPanels(TabName);
-            if (panelList == null || panelList.Count == 0)
-            {
-               uiCtrlApp.CreateRibbonTab(TabName);
-            }
-            RibbonPanel panel = uiCtrlApp.CreateRibbonPanel(TabName, "GENERAL");
+            CreateTab(uiCtrlApp, tabName);
+            RibbonPanel panel = CreatePanel(uiCtrlApp, tabName, panelName);
             PushButtonData buttonData = new PushButtonData(
-                "RevitAssistButton",
+                "RevitGuideButton",
                 "Revit Guide",
                 Assembly.GetExecutingAssembly().Location,
-                "RevitAssist.RevitGuide.MainWindowButton");
+                "RevitGuide.MainWindowButton");
             PushButton button = panel.AddItem(buttonData) as PushButton;
             Uri uriImage = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
             button.LargeImage = new BitmapImage(uriImage);
-
         }
 
+        private static void CreateTab(UIControlledApplication uiCtrlApp, string tabName)
+        {
+            try
+            {
+                uiCtrlApp.CreateRibbonTab(tabName);
+            }
+            catch (Autodesk.Revit.Exceptions.ArgumentException)
+            {
+                // Tab already exists
+            }
+        }
+
+        private static RibbonPanel CreatePanel(UIControlledApplication uiCtrlApp, string tabName, string panelName)
+        {
+            List<RibbonPanel> panelList = uiCtrlApp.GetRibbonPanels(tabName);
+            List<string> panelNames = panelList.Select(x => x.Name).ToList();
+            RibbonPanel panel;
+            if (!panelNames.Contains(panelName))
+            {
+                panel = uiCtrlApp.CreateRibbonPanel(tabName, panelName);
+                
+            }
+            else
+            {
+                panel = panelList.FirstOrDefault(x => x.Name == panelName);
+                
+            }
+            return panel;
+        }
     }
 }
