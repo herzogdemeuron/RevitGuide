@@ -1,15 +1,31 @@
-﻿using System;
+﻿using RevitGuide.Settings;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Security.Policy;
+using RevitGuide.Views;
+using System.IO;
 
 namespace RevitGuide.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<TabItemViewModel> Tabs { get; set; }
+        private SettingsManager _settingsManager;
+        private string DataFolderPath = @"C:\RevitGuideData\"; 
+        private ObservableCollection<TabItemViewModel> _tabs;
+        public ObservableCollection<TabItemViewModel> Tabs
+        {
+            get => _tabs;
+            set
+            {
+                _tabs = value;
+                OnPropertyChanged(nameof(Tabs));
+            }
+        }
         private TabItemViewModel _selectedTab;
         public TabItemViewModel SelectedTab
         {
@@ -17,29 +33,119 @@ namespace RevitGuide.ViewModels
             set
             {
                 _selectedTab = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedTab));
             }
         }
 
         public MainViewModel()
         {
-            Tabs = new ObservableCollection<TabItemViewModel>();
-            AddTab("https://climbing-college-eff.notion.site/HdM-Revit-Guide-571251e164de4fc9b12728bf698d474a?pvs=4", "Workflows");
-            AddTab(@"file://///hersrv01/Benutzer/Kejun_L/_934_DT/230426_RevitAssist/pdfs/live_assist_default.html", "Live Guide");
+            _settingsManager = new SettingsManager();
+            UpdateTabs();
+        }
 
+        private void UpdateTabs()
+        {
+            
+            List<TabSetting> tabSettings = _settingsManager.TabSettings;
+            ClearAllTabs();
+            
+            foreach (TabSetting tabSetting in tabSettings)
+            {
+                if (tabSetting.TabName == "" || tabSetting.TabUrl == "")
+                {
+                    continue;
+                }
+                AddTab(Tabs, tabSetting.TabName, tabSetting.TabUrl);
+            }
+            CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
         }
 
-        private void AddTab(string url, string header)
+        private void CleanDataFolders()
+        {
+            if (!Directory.Exists(DataFolderPath)) return;
+
+            List<string> activeDataFolders = Tabs.Select(tab => tab.FolderPath).ToList();
+            string[] existingDataFolders = Directory.GetDirectories(DataFolderPath);
+            foreach (string folder in existingDataFolders)
+            {
+                if (!activeDataFolders.Contains(folder))
+                {
+                    try
+                    {
+                        Directory.Delete(folder, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                }
+            }
+        }
+
+        private void AddTab(ObservableCollection<TabItemViewModel> tabs, string header, string url)
         {
             TabItemViewModel tab = new TabItemViewModel
             {
+                FolderPath = DataFolderPath,
                 Title = header,
-                Url = new Uri(url),
+                Url = Validate(url),
             };
             tab.InitWbv2();
-            Tabs.Add(tab);
+            tabs.Add(tab);
         }
+
+        public void ClearAllTabs()
+        {
+            if (Tabs != null)
+            {
+                foreach (TabItemViewModel tab in Tabs)
+                {
+                    tab.Dispose();
+                }
+            }
+            Tabs = new ObservableCollection<TabItemViewModel>();
+        }
+
+
+        private Uri Validate(string uri)
+        {
+
+            if (System.IO.File.Exists(uri))
+            {
+                return new Uri(uri);
+            }
+
+            if (Uri.TryCreate(uri, UriKind.Absolute, out Uri result))
+            {
+                return result;
+            }
+            else if (Uri.TryCreate("http://" + uri, UriKind.Absolute, out result))
+            {
+                return result;
+            }
+            else if (Uri.TryCreate("https://" + uri, UriKind.Absolute, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return new Uri("https://example.com");
+            }
+        }
+
+        public void HandleConfigClicked()
+        {
+            SettingsWindow settingsWindow = new SettingsWindow(_settingsManager);
+            bool? result = settingsWindow.ShowDialog();
+            if (result == true)
+            {
+                UpdateTabs();
+                
+            }
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

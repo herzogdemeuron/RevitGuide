@@ -68,16 +68,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandBinder.cs" />
-    <Compile Include="CommandManager.cs" />
-    <Compile Include="ExternalEventHandler.cs" />
-    <Compile Include="RevitGuideButton.cs" />
+    <Compile Include="Commands\CommandBinder.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Helpers\Mediator.cs" />
+    <Compile Include="Revit\ExternalEventHandler.cs" />
+    <Compile Include="Revit\StartCommand.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RibbonMaker.cs" />
+    <Compile Include="Revit\RibbonMaker.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Settings\TabSetting.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

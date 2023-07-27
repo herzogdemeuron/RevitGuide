@@ -17,8 +17,8 @@ namespace RevitGuide
         public Result OnStartup(UIControlledApplication uiCtrlApp)
         {
             UICtrlApp = uiCtrlApp;
-            CommandBinder.Register();
-            RibbonMaker.Create(uiCtrlApp,"HdM", "GENERAL");
+            //CommandBinder.Register();
+            RibbonMaker.Create(uiCtrlApp,"HdM", "HOME");
             //application.ControlledApplication.DocumentOpening += OnDocumentOpened;
             return Result.Succeeded;
         }
@@ -28,11 +28,15 @@ namespace RevitGuide
         }
 
 
-        private void OnDocumentOpened(object sender, DocumentOpeningEventArgs args)
+        private void OnDocumentOpening(object sender, DocumentOpeningEventArgs args)
         {
-            
+            //args.PathName;
+            //CommandBinder.Register();
+        }
 
-            CommandBinder.Register();
+        private void OnDocumentChanged(object sender, DocumentChangedEventArgs args)
+        {
+            //CommandBinder.Register();
         }
     }
 }

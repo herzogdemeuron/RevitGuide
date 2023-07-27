@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:RevitGuide"
         mc:Ignorable="d"
         d:DesignHeight="550" d:DesignWidth="400"
-        Height="600"
-        Width="400"
+        Height="600" MinHeight="600"
+        Width="400" MinWidth="400"
         Topmost="true"
         Title="Revit Guide"
         
@@ -50,7 +50,13 @@
         </Border.Effect>
         
         <Grid x:Name="WebView2Grid" Margin="5">
-            
+
+            <Label Content="REVIT GUIDE"
+                   HorizontalAlignment="Center"
+                   FontSize="9"
+                   Foreground="Gray"
+                   VerticalAlignment="Top"/>
+
             <StackPanel Height="20"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"

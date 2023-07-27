@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace RevitGuide
 {
     [Transaction(TransactionMode.Manual)]
-    public class RevitGuideButton : IExternalCommand
+    public class StartCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

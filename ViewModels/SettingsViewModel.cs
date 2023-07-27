@@ -1,8 +1,10 @@
 ﻿using GongSolutions.Wpf.DragDrop;
+using RevitGuide.Helpers;
 using RevitGuide.Settings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -24,17 +26,68 @@ namespace RevitGuide.ViewModels
             }
         }
 
-        public SettingsViewModel()
+        public SettingsViewModel(SettingsManager settingsManager)
         {
-            _settingsManager = new SettingsManager();
+            _settingsManager = settingsManager;
             TabSettings = new ObservableCollection<TabSetting>(_settingsManager.GetTabSettings());
         }
 
-        public void HandleNewItem()
+        public void HandleNewItem(List<int> indices)
         {
-            TabSettings.Add(new TabSetting());
-            OnPropertyChanged(nameof(TabSettings));
+
+            int index = TabSettings.Count;
+            if (indices.Count > 0)
+            {
+                index = indices.Max() + 1;
+            }
+            TabSettings.Insert(index, new TabSetting());
         }
+
+        public void HandleRemoveItems(List<int> indices)
+        {
+            indices.Sort();
+            indices.Reverse();
+            foreach (int index in indices)
+            {
+                TabSettings.RemoveAt(index);
+            }
+        }
+
+        public void HandleMoveItems(List<int> indices, bool dir)
+        {
+            // dir is true for move up, false for move down
+            indices.Sort();
+            int delta;
+            if (dir)
+            {
+                if (indices.Count > 0 && indices[0] == 0)
+                {
+                    return;
+                }
+                delta = -1;
+
+            }
+            else
+            {
+                indices.Reverse();
+                if (indices.Count > 0 && indices[0] == TabSettings.Count - 1)
+                {
+                    return;
+                }
+                delta = 1;
+            }
+            
+            List<TabSetting> selectedTabs = new List<TabSetting>();
+            foreach (int index in indices)
+            {
+                TabSetting tabSetting = TabSettings[index];
+                TabSettings.RemoveAt(index);
+                TabSettings.Insert(index + delta, tabSetting);
+                selectedTabs.Add(tabSetting);
+            }
+            Mediator.Broadcast("UpdateDataGridSelection", selectedTabs);
+        }
+
 
         public void HandleConfirm()
         {

@@ -11,10 +11,25 @@ namespace RevitGuide.ViewModels
         public Uri Url { get; set; }
         public WebView2 WebView { get; set; }
 
+        private string _folderPath;
+        public string FolderPath
+        {
+            get => _folderPath + Title;
+            set
+            {
+                _folderPath = value;
+                OnPropertyChanged();
+            }
+        }
         public void InitWbv2()
         {
             WebView2Model webView2Model = new WebView2Model(this);
             WebView = webView2Model.WebView2;
+        }
+
+        public void Dispose()
+        {
+            WebView.Dispose();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

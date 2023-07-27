@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace RevitGuide.Settings
 {
-
     public class SettingsManager
     {
         private readonly Schema _tabSchema;
@@ -16,6 +15,7 @@ namespace RevitGuide.Settings
         public SettingsManager()
         {
             _tabSchema = GetTabSchema();
+            TabSettings = GetTabSettings();
         }
 
         private Schema GetTabSchema()
@@ -62,7 +62,7 @@ namespace RevitGuide.Settings
             TabSettings = tabSettings;
             App.ExEventHandler.Raise(SetTabSettings);
         }
-        public void SetTabSettings()
+        private void SetTabSettings()
         {
 
             Entity entity = App.Doc.ProjectInformation.GetEntity(_tabSchema);

@@ -23,6 +23,7 @@ namespace RevitGuide
             button.LargeImage = new BitmapImage(uriImage);
         }
 
+
         private static void CreateTab(UIControlledApplication uiCtrlApp, string tabName)
         {
             try
@@ -37,20 +38,7 @@ namespace RevitGuide
 
         private static RibbonPanel CreatePanel(UIControlledApplication uiCtrlApp, string tabName, string panelName)
         {
-            List<RibbonPanel> panelList = uiCtrlApp.GetRibbonPanels(tabName);
-            List<string> panelNames = panelList.Select(x => x.Name).ToList();
-            RibbonPanel panel;
-            if (!panelNames.Contains(panelName))
-            {
-                panel = uiCtrlApp.CreateRibbonPanel(tabName, panelName);
-                
-            }
-            else
-            {
-                panel = panelList.FirstOrDefault(x => x.Name == panelName);
-                
-            }
-            return panel;
+            return uiCtrlApp.GetRibbonPanels(tabName).Where(x => x.Name == panelName)?.FirstOrDefault() ?? uiCtrlApp.CreateRibbonPanel(tabName, panelName);
         }
     }
 }

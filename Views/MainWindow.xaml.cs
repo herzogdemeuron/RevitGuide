@@ -6,10 +6,12 @@ namespace RevitGuide.Views
 {
     public partial class MainWindow : Window
     {
-        
+        private MainViewModel _viewModel;
+
         public MainWindow()
         {
-            DataContext = new MainViewModel();
+            _viewModel = new MainViewModel();
+            this.DataContext = _viewModel;
             InitializeComponent();
         }
 
@@ -21,12 +23,12 @@ namespace RevitGuide.Views
 
         private void OnConfigClicked(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.ShowDialog();
+            _viewModel.HandleConfigClicked();
         }
 
         private void OnCloseClicked(object sender, RoutedEventArgs e)
-        { 
+        {
+            _viewModel.ClearAllTabs();
             this.Close();
         }
 
