@@ -375,3 +375,7 @@ ConnectorArchicad/AddOn/Build*
 ConnectorArchicad/ConnectorArchicad/Properties
 **/dist/
 
+.vs
+bin
+obj
+
