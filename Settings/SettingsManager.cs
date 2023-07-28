@@ -57,6 +57,12 @@ namespace RevitGuide.Settings
             return tabNames.Zip(tabUrls, (name, url) => new TabSetting(name, url)).ToList();
         }
 
+        public List<TriggerSetting> GetTriggerSettings()
+        {
+
+            return new List<TriggerSetting> { };
+        }
+
         public void UpdateTabSettings(List<TabSetting> tabSettings)
         {
             TabSettings = tabSettings;
@@ -76,7 +82,7 @@ namespace RevitGuide.Settings
                 t.Start();
 
                 entity.Set<IList<string>>("TabNames", TabSettings.Select(x => x.TabName).ToList());
-                entity.Set<IList<string>>("TabUrls", TabSettings.Select(x => x.TabUrl).ToList());
+                entity.Set<IList<string>>("TabUrls", TabSettings.Select(x => x.TabUri).ToList());
 
                 App.Doc.ProjectInformation.SetEntity(entity);
                 t.Commit();

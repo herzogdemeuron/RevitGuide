@@ -103,7 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandBinder.cs" />
+    <Compile Include="Commands\CommandDescriptions.cs" />
     <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\RvtCommand.cs" />
+    <Compile Include="Commands\RvtCommandManager.cs" />
     <Compile Include="Helpers\Mediator.cs" />
     <Compile Include="Revit\ExternalEventHandler.cs" />
     <Compile Include="Revit\StartCommand.cs" />
@@ -113,6 +116,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Revit\RibbonMaker.cs" />
+    <Compile Include="Settings\TriggerSetting.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Settings\TabSetting.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -135,6 +139,9 @@
     </Page>
     <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewResources.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

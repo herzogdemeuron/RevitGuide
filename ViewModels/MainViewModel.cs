@@ -55,7 +55,7 @@ namespace RevitGuide.ViewModels
                 {
                     continue;
                 }
-                AddTab(Tabs, tabSetting.TabName, tabSetting.TabUrl);
+                AddTab(Tabs, tabSetting.TabName, tabSetting.TabUri);
             }
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();

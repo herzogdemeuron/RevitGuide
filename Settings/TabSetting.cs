@@ -9,12 +9,12 @@ namespace RevitGuide.Settings
     public class TabSetting
     {
         public string TabName { get; set; }
-        public string TabUrl { get; set; }
+        public string TabUri { get; set; }
 
-        public TabSetting(string name = "", string url = "")
+        public TabSetting(string name = "", string uri = "")
         {
             TabName = name;
-            TabUrl = url;
+            TabUri = uri;
         }
     }
 }

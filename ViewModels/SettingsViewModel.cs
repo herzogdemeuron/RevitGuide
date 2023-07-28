@@ -19,14 +19,26 @@ namespace RevitGuide.ViewModels
             set
             {
                 _tabSettings = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(TabSettings));
             }
         }
+        private ObservableCollection<TriggerSetting> _triggerSettings;
+        public ObservableCollection<TriggerSetting> TriggerSettings
+        {
+            get => _triggerSettings;
+            set
+            {
+                _triggerSettings = value;
+                OnPropertyChanged(nameof(TriggerSettings));
+            }
+        }
+
 
         public SettingsViewModel(SettingsManager settingsManager)
         {
             _settingsManager = settingsManager;
             TabSettings = new ObservableCollection<TabSetting>(_settingsManager.GetTabSettings());
+            TriggerSettings = new ObservableCollection<TriggerSetting>(_settingsManager.GetTriggerSettings());
         }
 
         public void HandleNewItem(List<int> indices)
