@@ -51,7 +51,7 @@ namespace RevitGuide.ViewModels
             
             foreach (TabSetting tabSetting in tabSettings)
             {
-                if (tabSetting.TabName == "" || tabSetting.TabUrl == "")
+                if (tabSetting.TabName == "")
                 {
                     continue;
                 }
@@ -111,12 +111,16 @@ namespace RevitGuide.ViewModels
         private Uri Validate(string uri)
         {
 
-            if (System.IO.File.Exists(uri))
+            if (File.Exists(uri))
             {
                 return new Uri(uri);
             }
 
-            if (Uri.TryCreate(uri, UriKind.Absolute, out Uri result))
+            if (uri == "")
+            {
+                return new Uri(App.DataFolderPath23 + "first_page.html");
+            }
+            else if (Uri.TryCreate(uri, UriKind.Absolute, out Uri result))
             {
                 return result;
             }
@@ -130,7 +134,7 @@ namespace RevitGuide.ViewModels
             }
             else
             {
-                return new Uri("https://example.com");
+                return new Uri(App.DataFolderPath23 + "invalid_page.html");
             }
         }
 

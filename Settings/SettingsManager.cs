@@ -45,9 +45,9 @@ namespace RevitGuide.Settings
 
             if (!entity.IsValid())
             {
-                return new List<TabSetting>()
+                return new List<TabSetting>
                 {
-                    new TabSetting("Default Tab", "http://example.com")
+                    new TabSetting("First Tab", "")
                 };
             }
 
