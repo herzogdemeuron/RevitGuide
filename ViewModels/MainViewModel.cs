@@ -15,7 +15,7 @@ namespace RevitGuide.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private SettingsManager _settingsManager;
-        private string DataFolderPath = @"C:\RevitGuideData\"; 
+        private string DataFolderPath = App.DataFolderPath23; 
         private ObservableCollection<TabItemViewModel> _tabs;
         public ObservableCollection<TabItemViewModel> Tabs
         {

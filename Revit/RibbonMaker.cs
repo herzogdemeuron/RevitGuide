@@ -17,7 +17,7 @@ namespace RevitGuide
                 "RevitGuideButton",
                 "Revit Guide",
                 Assembly.GetExecutingAssembly().Location,
-                "RevitGuide.MainWindowButton");
+                "RevitGuide.StartCommand");
             PushButton button = panel.AddItem(buttonData) as PushButton;
             Uri uriImage = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
             button.LargeImage = new BitmapImage(uriImage);

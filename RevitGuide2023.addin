@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>RevitGuide</Name>
+    <Assembly>"C:\ProgramData\Autodesk\Revit\Addins\2023\RevitGuide\RevitGuide.dll"</Assembly>
+    <AddInId>4cfa42d4-2899-433c-925c-62e29e74f98d</AddInId>
+    <FullClassName>RevitGuide.App</FullClassName>
+    <VendorId>HdMDT</VendorId>
+  </AddIn>
+</RevitAddIns>

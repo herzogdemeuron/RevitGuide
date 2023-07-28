@@ -67,7 +67,7 @@
                    HorizontalAlignment="Center"
                    FontSize="9"
                    Foreground="Gray"
-                   VerticalAlignment="Top"/>
+                   Padding="0"/>
 
             <StackPanel Height="20"
                         HorizontalAlignment="Right"

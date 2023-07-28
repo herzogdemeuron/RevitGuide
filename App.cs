@@ -14,6 +14,7 @@ namespace RevitGuide
         public static Document Doc { get; set; }
         public static UIControlledApplication UICtrlApp;
         public static ExternalEventHandler ExEventHandler = new ExternalEventHandler();
+        public readonly static string DataFolderPath23 = @"C:\ProgramData\Autodesk\Revit\Addins\2023\RevitGuide\Data\";
         public Result OnStartup(UIControlledApplication uiCtrlApp)
         {
             UICtrlApp = uiCtrlApp;
