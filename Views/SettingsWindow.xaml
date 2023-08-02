@@ -24,7 +24,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ViewResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
         </ResourceDictionary>
+
     </Window.Resources>
 
     <Border>
@@ -66,6 +68,7 @@
                          Header="PAGE TABS">
                     <Grid>
                         <DataGrid x:Name="TabSettingsDataGrid"
+                                  RowHeight="25"
                                 ItemsSource="{Binding TabSettings,Mode=TwoWay}"
                                 MouseLeftButtonDown="DataGridMouseLeftButtonUp">
                             <DataGrid.Columns>
@@ -80,19 +83,38 @@
                          Header="LIVE GUIDE">
                     <Grid>
                         <DataGrid x:Name="TriggerSettingsDataGrid"
-                        ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
-                        MouseLeftButtonDown="DataGridMouseLeftButtonUp">
+                                    ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
+                                    RowHeight="35"
+                                    MouseLeftButtonDown="DataGridMouseLeftButtonUp">
                             <DataGrid.Columns>
-                                <DataGridComboBoxColumn Header="COMMAND" 
-                                                        SelectedItemBinding="{Binding Key}" 
-                                                        Width="150"
-                                                        ItemsSource="{Binding Path=DataContext.AllCommands, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                <DataGridTemplateColumn Header="COMMAND" 
+                                                        Width="150">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                      DisplayMemberPath="Name"
+                                                      ItemsSource="{Binding DataContext.AllCommands, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                        <StackPanel Height="40"
+                                                                    ToolTip="{Binding Description}">
+                                                            <TextBlock Text="{Binding Name}"/>
+                                                            <TextBlock Text="{Binding Description}"
+                                                                       FontSize="9"
+                                                                       Foreground="Gray"/>
+                                                        </StackPanel>
+                                                    
+                                                    </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="PATH" Binding="{Binding Uri}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                 </TabItem>
-                
             </TabControl>
 
            

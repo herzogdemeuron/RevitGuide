@@ -108,6 +108,7 @@
     <Compile Include="Commands\RvtCommand.cs" />
     <Compile Include="Commands\RvtCommandManager.cs" />
     <Compile Include="Helpers\Mediator.cs" />
+    <Compile Include="Helpers\RvtCommandHelper.cs" />
     <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Revit\ExternalEventHandler.cs" />
     <Compile Include="Revit\StartCommand.cs" />
@@ -117,7 +118,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Revit\RibbonMaker.cs" />
-    <Compile Include="Settings\TriggerSetting.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Settings\ItemSetting.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

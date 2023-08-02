@@ -1,22 +1,47 @@
 ﻿using Autodesk.Revit.UI;
-using RevitGuide.Commands;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RevitGuide.Helpers;
+using RevitGuide.Commands;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace RevitGuide.Settings
 {
     public class ItemSetting
     {
-        public string Key { get; set; } 
-        public string Uri { get; set; }
+        private string _key;
+        public string Key
+        {
+            get => _key;
+            set
+            {
+                _key = value;
+            }
+        }
+        private string _uri;
+        public string Uri
+        {
+            get => _uri;
+            set
+            {
+                _uri = value;
+            }
+        }
+        public RvtCommand RvtCommand 
+        { 
+            get => new RvtCommand(Key);
+            set
+            {
+
+                Key = value.Name;
+            }
+        }
 
         public ItemSetting(string key = null , string uri = "")
         {
             Key = key;
             Uri = uri;
         }
+
     }
 }

@@ -63,8 +63,8 @@ namespace RevitGuide.Views
             var hit = VisualTreeHelper.HitTest((Visual)sender, e.GetPosition((IInputElement)sender));
             if (!(hit.VisualHit is DataGridRow))
             {
-                TabSettingsDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
-                TabSettingsDataGrid.SelectedItem = null;
+                _activeDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+                _activeDataGrid.SelectedItem = null;
             }
         }
 

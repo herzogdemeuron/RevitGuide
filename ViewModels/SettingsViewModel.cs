@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.UI;
+using RevitGuide.Commands;
 using RevitGuide.Helpers;
 using RevitGuide.Settings;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace RevitGuide.ViewModels
         private SettingsManager _settingsManager;
         public bool IsTabSettingsActive { get; set; } = true;
 
-        public List<string> AllCommands { get; } = new List<string> { "1", "2", "3" };
+        public static List<RvtCommand> AllCommands { get => RvtCommandManager.AllRvtCommands; } 
         public ObservableCollection<ItemSetting> ActiveSettings
         {
             get=> IsTabSettingsActive ? TabSettings : TriggerSettings;
@@ -45,8 +46,8 @@ namespace RevitGuide.ViewModels
         {
             _settingsManager = settingsManager;
             TabSettings = new ObservableCollection<ItemSetting>(_settingsManager.TabSettings);
-            //TriggerSettings = new ObservableCollection<ItemSetting>(_settingsManager.GetTriggerSettings());
-            TriggerSettings = new ObservableCollection<ItemSetting>{new ItemSetting("1", "2")};
+            TriggerSettings = new ObservableCollection<ItemSetting>(_settingsManager.TriggerSettings);
+            //TriggerSettings = new ObservableCollection<ItemSetting>{new ItemSetting("1", "2")};
 
         }
 

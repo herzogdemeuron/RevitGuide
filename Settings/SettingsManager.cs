@@ -19,15 +19,6 @@ namespace RevitGuide.Settings
             TabSettings = SettingsHelper.GetTabSettings();
             TriggerSettings = SettingsHelper.GetTriggerSettings();
         }
-    /*    public List<ItemSetting> GetTabSettings()
-        {
-            return SettingsHelper.GetTabSettings();
-        }
-
-        public List<ItemSetting> GetTriggerSettings()
-        {
-            return SettingsHelper.GetTriggerSettings();
-        }*/
 
         public void UpdateSettings(List<ItemSetting> tabSettings, List<ItemSetting> triggerSettings)
         {
