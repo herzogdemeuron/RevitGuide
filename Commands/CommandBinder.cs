@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace RevitGuide
+namespace RevitGuide.Commands
 {
     public static class CommandBinder
     {
@@ -25,23 +25,26 @@ namespace RevitGuide
                 foreach (KeyValuePair<PostableCommand, String> item in PostableCommandDict)
                 {
                     RevitCommandId commandId = RevitCommandId.LookupPostableCommandId(item.Key);
-                    AddInCommandBinding commandBinding = App.UICtrlApp.CreateAddInCommandBinding(commandId);
+                    UIControlledApplication uIControlledApplication = App.UICtrlApp;
+                    AddInCommandBinding commandBinding = uIControlledApplication.CreateAddInCommandBinding(commandId);
                     
                     void BeforeCommandExecute(object sender, BeforeExecutedEventArgs e)
                     {
-                        try
-                        {
-                            if (WebView != null)
-                            {
-                                Debug.WriteLine("trying navigate");
-                                WebView.CoreWebView2.Navigate(item.Value);
-                            }
-                            
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine(ex);
-                        }
+                        TaskDialog.Show("test", "test");
+                        /* try
+                         {
+                             if (WebView != null)
+                             {
+                                 Debug.WriteLine("trying navigate");
+                                 WebView.CoreWebView2.Navigate(item.Value);
+                             }
+
+                         }
+                         catch (Exception ex)
+                         {
+
+                             Debug.WriteLine(ex);
+                         }*/
                     }
 
                     commandBinding.BeforeExecuted += BeforeCommandExecute;

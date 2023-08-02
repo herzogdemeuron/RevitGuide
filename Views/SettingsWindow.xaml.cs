@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Autodesk.Revit.DB;
 
 namespace RevitGuide.Views
 {
@@ -16,23 +17,47 @@ namespace RevitGuide.Views
     {
         private SettingsViewModel _settingsViewModel;
 
+        private DataGrid _activeDataGrid
+        {
+            get
+            {
+                return _settingsViewModel.IsTabSettingsActive ? TabSettingsDataGrid : TriggerSettingsDataGrid;
+            }
+        }
+
         public SettingsWindow(SettingsManager settingsManager)
         {
             _settingsViewModel = new SettingsViewModel(settingsManager);
             DataContext = _settingsViewModel;
             InitializeComponent();
-            Mediator.Register("UpdateDataGridSelection", tabsettings => UpdateDataGridSelection((List<TabSetting>)tabsettings));
+            Mediator.Register("UpdateDataGridSelection", itemsettings => UpdateDataGridSelection((List<ItemSetting>)itemsettings));
         }
 
-        private void UpdateDataGridSelection(List<TabSetting> tabSettings)
+        private void UpdateDataGridSelection(List<ItemSetting> tabSettings)
         {
-            TabSettingsDataGrid.SelectedItems.Clear();
-            foreach (TabSetting tabSetting in tabSettings)
+            //refresh the datagrid selections
+            _activeDataGrid.SelectedItems.Clear();
+            foreach (ItemSetting tabSetting in tabSettings)
             {
-                TabSettingsDataGrid.SelectedItems.Add(tabSetting);
+                _activeDataGrid.SelectedItems.Add(tabSetting);
             }
         }
-
+        private void TabSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabControl tabControl = sender as TabControl;
+            if (tabControl.SelectedItem is TabItem selectedTab)
+            {
+                switch (selectedTab.Name)
+                {
+                    case "PageTabsTab":
+                        _settingsViewModel.IsTabSettingsActive = true;
+                        break;
+                    case "LiveGuideTab":
+                        _settingsViewModel.IsTabSettingsActive = false;
+                        break;
+                }
+            }
+        }
         private void DataGridMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var hit = VisualTreeHelper.HitTest((Visual)sender, e.GetPosition((IInputElement)sender));
@@ -84,9 +109,9 @@ namespace RevitGuide.Views
         private List<int> GetDatagridSelectedIndices()
         {
             List<int> selectedIndices = new List<int>();
-            foreach (TabSetting item in TabSettingsDataGrid.SelectedItems)
+            foreach (ItemSetting item in _activeDataGrid.SelectedItems)
             {
-                selectedIndices.Add(_settingsViewModel.TabSettings.IndexOf(item));
+                selectedIndices.Add(_settingsViewModel.ActiveSettings.IndexOf(item));
             }
             return selectedIndices;
         }

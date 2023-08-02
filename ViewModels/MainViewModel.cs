@@ -46,16 +46,16 @@ namespace RevitGuide.ViewModels
         private void UpdateTabs()
         {
             
-            List<TabSetting> tabSettings = _settingsManager.TabSettings;
+            List<ItemSetting> tabSettings = _settingsManager.TabSettings;
             ClearAllTabs();
             
-            foreach (TabSetting tabSetting in tabSettings)
+            foreach (ItemSetting tabSetting in tabSettings)
             {
-                if (tabSetting.TabName == "")
+                if (tabSetting.Key == null)
                 {
                     continue;
                 }
-                AddTab(Tabs, tabSetting.TabName, tabSetting.TabUri);
+                AddTab(Tabs, tabSetting.Key, tabSetting.Uri);
             }
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
@@ -144,8 +144,7 @@ namespace RevitGuide.ViewModels
             bool? result = settingsWindow.ShowDialog();
             if (result == true)
             {
-                UpdateTabs();
-                
+                UpdateTabs(); 
             }
         }
 

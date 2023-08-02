@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\ProgramData\Autodesk\Revit\Addins\2023\RevitGuide\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -108,6 +108,7 @@
     <Compile Include="Commands\RvtCommand.cs" />
     <Compile Include="Commands\RvtCommandManager.cs" />
     <Compile Include="Helpers\Mediator.cs" />
+    <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Revit\ExternalEventHandler.cs" />
     <Compile Include="Revit\StartCommand.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -118,7 +119,7 @@
     <Compile Include="Revit\RibbonMaker.cs" />
     <Compile Include="Settings\TriggerSetting.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
-    <Compile Include="Settings\TabSetting.cs" />
+    <Compile Include="Settings\ItemSetting.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\WebView2Model.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

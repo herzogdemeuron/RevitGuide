@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitGuide
+namespace RevitGuide.Revit
 {
     [Transaction(TransactionMode.Manual)]
     public class StartCommand : IExternalCommand

@@ -1,7 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
-using RevitGuide.Views;
+using RevitGuide.Commands;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -50,10 +50,10 @@ namespace RevitGuide.ViewModels
             WebView2.Dispose();
         }
 
-        private void NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+  /*      private void NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
         {
 
-        }
+        }*/
 
         void NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
         {

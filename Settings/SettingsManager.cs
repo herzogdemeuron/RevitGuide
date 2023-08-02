@@ -3,90 +3,41 @@ using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Autodesk.Revit.UI;
+using RevitGuide.Helpers;
 
 namespace RevitGuide.Settings
 {
     public class SettingsManager
     {
-        private readonly Schema _tabSchema;
-        public List<TabSetting> TabSettings { get; set; }
+        private SettingsHelper SettingsHelper = new SettingsHelper();
+        public List<ItemSetting> TabSettings { get; set; }
+        public List<ItemSetting> TriggerSettings { get; set; }
 
         public SettingsManager()
         {
-            _tabSchema = GetTabSchema();
-            TabSettings = GetTabSettings();
+            TabSettings = SettingsHelper.GetTabSettings();
+            TriggerSettings = SettingsHelper.GetTriggerSettings();
         }
-
-        private Schema GetTabSchema()
+    /*    public List<ItemSetting> GetTabSettings()
         {
-            Schema existingSchema = Schema.ListSchemas().FirstOrDefault(s => s.SchemaName == "TabSchema");
-            if (existingSchema != null)
-            {
-                return existingSchema;
-            }
-            else
-            {
-                SchemaBuilder schemaBuilder = new SchemaBuilder(Guid.NewGuid());
-                schemaBuilder.SetSchemaName("TabSchema");
-                schemaBuilder.SetReadAccessLevel(AccessLevel.Public);
-                schemaBuilder.SetWriteAccessLevel(AccessLevel.Public);
-
-                schemaBuilder.AddArrayField("TabNames", typeof(string));
-                schemaBuilder.AddArrayField("TabUrls", typeof(string));
-
-                return schemaBuilder.Finish();
-            }
+            return SettingsHelper.GetTabSettings();
         }
 
-        public List<TabSetting> GetTabSettings()
+        public List<ItemSetting> GetTriggerSettings()
         {
-            Entity entity = App.Doc.ProjectInformation.GetEntity(_tabSchema);
+            return SettingsHelper.GetTriggerSettings();
+        }*/
 
-            if (!entity.IsValid())
-            {
-                return new List<TabSetting>
-                {
-                    new TabSetting("First Tab", "")
-                };
-            }
-
-            var tabNames = entity.Get<IList<string>>("TabNames").ToList();
-            var tabUrls = entity.Get<IList<string>>("TabUrls").ToList();
-
-            return tabNames.Zip(tabUrls, (name, url) => new TabSetting(name, url)).ToList();
-        }
-
-        public List<TriggerSetting> GetTriggerSettings()
-        {
-
-            return new List<TriggerSetting> { };
-        }
-
-        public void UpdateTabSettings(List<TabSetting> tabSettings)
+        public void UpdateSettings(List<ItemSetting> tabSettings, List<ItemSetting> triggerSettings)
         {
             TabSettings = tabSettings;
-            App.ExEventHandler.Raise(SetTabSettings);
+            TriggerSettings = triggerSettings;
+            App.ExEventHandler.Raise(SetSettings);
         }
-        private void SetTabSettings()
+        private void SetSettings()
         {
-
-            Entity entity = App.Doc.ProjectInformation.GetEntity(_tabSchema);
-            if (!entity.IsValid())
-            {
-                  entity = new Entity(_tabSchema);
-            }
-
-            using (Transaction t = new Transaction(App.Doc, "Set tab settings"))
-            {
-                t.Start();
-
-                entity.Set<IList<string>>("TabNames", TabSettings.Select(x => x.TabName).ToList());
-                entity.Set<IList<string>>("TabUrls", TabSettings.Select(x => x.TabUri).ToList());
-
-                App.Doc.ProjectInformation.SetEntity(entity);
-                t.Commit();
-            }
+            SettingsHelper.UpdateAllSettings(TabSettings, TriggerSettings);
         }
     }
 }

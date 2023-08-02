@@ -1,4 +1,5 @@
-﻿using RevitGuide.Helpers;
+﻿using Autodesk.Revit.UI;
+using RevitGuide.Helpers;
 using RevitGuide.Settings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,9 +12,16 @@ namespace RevitGuide.ViewModels
     public class SettingsViewModel : INotifyPropertyChanged
     {
         private SettingsManager _settingsManager;
+        public bool IsTabSettingsActive { get; set; } = true;
 
-        private ObservableCollection<TabSetting> _tabSettings;  
-        public ObservableCollection<TabSetting> TabSettings
+        public List<string> AllCommands { get; } = new List<string> { "1", "2", "3" };
+        public ObservableCollection<ItemSetting> ActiveSettings
+        {
+            get=> IsTabSettingsActive ? TabSettings : TriggerSettings;
+        }
+
+        private ObservableCollection<ItemSetting> _tabSettings;  
+        public ObservableCollection<ItemSetting> TabSettings
         {
             get => _tabSettings;
             set
@@ -22,8 +30,8 @@ namespace RevitGuide.ViewModels
                 OnPropertyChanged(nameof(TabSettings));
             }
         }
-        private ObservableCollection<TriggerSetting> _triggerSettings;
-        public ObservableCollection<TriggerSetting> TriggerSettings
+        private ObservableCollection<ItemSetting> _triggerSettings;
+        public ObservableCollection<ItemSetting> TriggerSettings
         {
             get => _triggerSettings;
             set
@@ -33,23 +41,24 @@ namespace RevitGuide.ViewModels
             }
         }
 
-
         public SettingsViewModel(SettingsManager settingsManager)
         {
             _settingsManager = settingsManager;
-            TabSettings = new ObservableCollection<TabSetting>(_settingsManager.GetTabSettings());
-            TriggerSettings = new ObservableCollection<TriggerSetting>(_settingsManager.GetTriggerSettings());
+            TabSettings = new ObservableCollection<ItemSetting>(_settingsManager.TabSettings);
+            //TriggerSettings = new ObservableCollection<ItemSetting>(_settingsManager.GetTriggerSettings());
+            TriggerSettings = new ObservableCollection<ItemSetting>{new ItemSetting("1", "2")};
+
         }
 
         public void HandleNewItem(List<int> indices)
         {
 
-            int index = TabSettings.Count;
+            int index = ActiveSettings.Count;
             if (indices.Count > 0)
             {
                 index = indices.Max() + 1;
             }
-            TabSettings.Insert(index, new TabSetting());
+            ActiveSettings.Insert(index, new ItemSetting());
         }
 
         public void HandleRemoveItems(List<int> indices)
@@ -58,13 +67,13 @@ namespace RevitGuide.ViewModels
             indices.Reverse();
             foreach (int index in indices)
             {
-                TabSettings.RemoveAt(index);
+                ActiveSettings.RemoveAt(index);
             }
         }
 
         public void HandleMoveItems(List<int> indices, bool dir)
         {
-            // dir is true for move up, false for move down
+            // dir: true for moving up, false for moving down
             indices.Sort();
             int delta;
             if (dir)
@@ -79,20 +88,20 @@ namespace RevitGuide.ViewModels
             else
             {
                 indices.Reverse();
-                if (indices.Count > 0 && indices[0] == TabSettings.Count - 1)
+                if (indices.Count > 0 && indices[0] == ActiveSettings.Count - 1)
                 {
                     return;
                 }
                 delta = 1;
             }
             
-            List<TabSetting> selectedTabs = new List<TabSetting>();
+            List<ItemSetting> selectedTabs = new List<ItemSetting>();
             foreach (int index in indices)
             {
-                TabSetting tabSetting = TabSettings[index];
-                TabSettings.RemoveAt(index);
-                TabSettings.Insert(index + delta, tabSetting);
-                selectedTabs.Add(tabSetting);
+                ItemSetting itemSetting = ActiveSettings[index];
+                ActiveSettings.RemoveAt(index);
+                ActiveSettings.Insert(index + delta, itemSetting);
+                selectedTabs.Add(itemSetting);
             }
             Mediator.Broadcast("UpdateDataGridSelection", selectedTabs);
         }
@@ -100,7 +109,7 @@ namespace RevitGuide.ViewModels
 
         public void HandleConfirm()
         {
-            _settingsManager.UpdateTabSettings(TabSettings.ToList());
+            _settingsManager.UpdateSettings(TabSettings.ToList(), TriggerSettings.ToList());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

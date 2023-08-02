@@ -55,39 +55,41 @@
 
             <TabControl Grid.Row="1"
                         Margin="0,5,0,0"
-                        TabStripPlacement="Left">
+                        TabStripPlacement="Left"
+                        SelectionChanged="TabSelectionChanged">
                 
                 <TabControl.RenderTransform>
                     <RotateTransform Angle="0"/>
                 </TabControl.RenderTransform>
 
-                <TabItem Header="PAGE TABS">
+                <TabItem x:Name="PageTabsTab"
+                         Header="PAGE TABS">
                     <Grid>
                         <DataGrid x:Name="TabSettingsDataGrid"
                                 ItemsSource="{Binding TabSettings,Mode=TwoWay}"
                                 MouseLeftButtonDown="DataGridMouseLeftButtonUp">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="NAME" Binding="{Binding TabName}" Width="150"/>
-                                <DataGridTextColumn Header="PATH" Binding="{Binding TabUrl}" Width="*"/>
+                                <DataGridTextColumn Header="NAME" Binding="{Binding Key}" Width="150"/>
+                                <DataGridTextColumn Header="PATH" Binding="{Binding Uri}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="LIVE GUIDE">
+                <TabItem x:Name="LiveGuideTab"
+                         Header="LIVE GUIDE">
                     <Grid>
-                        <TabItem Header="PAGE TABS">
-                            <Grid>
-                                <DataGrid x:Name="TriggerSettingsDataGrid"
-                                ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
-                                MouseLeftButtonDown="DataGridMouseLeftButtonUp">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="COMMAND" Binding="{Binding TabName}" Width="150"/>
-                                        <DataGridTextColumn Header="PATH" Binding="{Binding TabUrl}" Width="*"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </Grid>
-                        </TabItem>
+                        <DataGrid x:Name="TriggerSettingsDataGrid"
+                        ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
+                        MouseLeftButtonDown="DataGridMouseLeftButtonUp">
+                            <DataGrid.Columns>
+                                <DataGridComboBoxColumn Header="COMMAND" 
+                                                        SelectedItemBinding="{Binding Key}" 
+                                                        Width="150"
+                                                        ItemsSource="{Binding Path=DataContext.AllCommands, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                <DataGridTextColumn Header="PATH" Binding="{Binding Uri}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
                 </TabItem>
                 
