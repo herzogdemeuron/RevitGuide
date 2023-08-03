@@ -99,14 +99,25 @@
                                                         Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                          <views:SearchComboBox 
-                                                      IsEditable="True"
-                                                      IsTextSearchEnabled="False"
-                                                
-                                                      SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                      ItemsSource="{Binding AllRvtCmdCollection}"
-                                                      DisplayMemberPath="Name">
-                                            <ComboBox.ItemTemplate>
+                                            <ComboBox   IsEditable="True"
+                                                        IsTextSearchEnabled="False"
+                                                        Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                              
+                                                        SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                        ItemsSource="{Binding FilteredRvtCommands,UpdateSourceTrigger=PropertyChanged}"
+                                                        DisplayMemberPath="Name">
+                                                <ComboBox.Triggers>
+                                                    <EventTrigger RoutedEvent="TextBoxBase.TextChanged">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsDropDownOpen">
+                                                                    <DiscreteBooleanKeyFrame Value="True" KeyTime="0:0:0"/>
+                                                                </BooleanAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </ComboBox.Triggers>
+                                                <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                         <StackPanel Height="40"
                                                                     ToolTip="{Binding Description}">
@@ -120,7 +131,7 @@
                                                     
                                                     </DataTemplate>
                                             </ComboBox.ItemTemplate>
-                                            </views:SearchComboBox>
+                                            </ComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
