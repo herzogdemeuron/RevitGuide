@@ -8,8 +8,10 @@ namespace RevitGuide.ViewModels
     public class TabItemViewModel : INotifyPropertyChanged
     {
         public string Title { get; set; }
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
         public WebView2 WebView { get; set; }
+        public bool IsLive { get; set; } = false;
+        public bool IsSpacer { get; set; } = false;
 
         private string _folderPath;
         public string FolderPath

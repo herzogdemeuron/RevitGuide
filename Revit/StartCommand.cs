@@ -15,8 +15,7 @@ namespace RevitGuide.Revit
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            App.Doc = commandData.Application.ActiveUIDocument.Document;
-            MainWindow window = new MainWindow();
+            MainWindow window = new MainWindow(commandData.Application.ActiveUIDocument.Document);
             window.Show();
             return Result.Succeeded;
         }

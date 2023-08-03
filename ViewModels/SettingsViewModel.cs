@@ -15,7 +15,7 @@ namespace RevitGuide.ViewModels
         private SettingsManager _settingsManager;
         public bool IsTabSettingsActive { get; set; } = true;
 
-        public static List<RvtCommand> AllCommands { get => RvtCommandManager.AllRvtCommands; } 
+        public static List<RvtCommand> AllCommands { get => RvtCommandHelper.AllRvtCommands; } 
         public ObservableCollection<ItemSetting> ActiveSettings
         {
             get=> IsTabSettingsActive ? TabSettings : TriggerSettings;
@@ -47,8 +47,6 @@ namespace RevitGuide.ViewModels
             _settingsManager = settingsManager;
             TabSettings = new ObservableCollection<ItemSetting>(_settingsManager.TabSettings);
             TriggerSettings = new ObservableCollection<ItemSetting>(_settingsManager.TriggerSettings);
-            //TriggerSettings = new ObservableCollection<ItemSetting>{new ItemSetting("1", "2")};
-
         }
 
         public void HandleNewItem(List<int> indices)
@@ -112,6 +110,8 @@ namespace RevitGuide.ViewModels
         {
             _settingsManager.UpdateSettings(TabSettings.ToList(), TriggerSettings.ToList());
         }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

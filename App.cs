@@ -8,14 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using RevitGuide.Revit;
 using System.Reflection;
+using RevitGuide.Commands;
 
 namespace RevitGuide
 {
     public class App : IExternalApplication
     {
-
-        public static Document Doc { get; set; }
+        private bool _isLiveGuideSet = false;
         public static UIControlledApplication UICtrlApp;
+        public static CommandBinder CommandBinder;
         public static ExternalEventHandler ExEventHandler = new ExternalEventHandler();
         public readonly static string DataFolderPath23 = @"C:\ProgramData\Autodesk\Revit\Addins\2023\RevitGuide\Data\";
         public Result OnStartup(UIControlledApplication uiCtrlApp)
@@ -34,8 +35,12 @@ namespace RevitGuide
 
         private void OnDocumentOpened(object sender, DocumentOpenedEventArgs args)
         {
-            Doc = args.Document;
-            //CommandBinder.Register();
+            if(!_isLiveGuideSet)
+            {
+                _isLiveGuideSet = true;
+                CommandBinder = new CommandBinder(args.Document);
+                CommandBinder.Register();
+            }
         }
 
         private void OnDocumentOpening(object sender, DocumentOpeningEventArgs args)

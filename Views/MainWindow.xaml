@@ -9,6 +9,7 @@
         Height="600" MinHeight="600"
         Width="400" MinWidth="400"
         
+        Title="Revit Guide"
         Topmost="True"
         WindowStartupLocation="CenterScreen"
         
@@ -49,14 +50,28 @@
                 <Button Content="✕"
                         Click="OnCloseClicked"/>
             </StackPanel>
-            
 
-        <TabControl x:Name="TabContainer"
+
+            <TabControl x:Name="TabContainer"
                     Margin="0,20,0,0"
                     ItemsSource="{Binding Tabs}"
                     SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
-                
-            <TabControl.ItemTemplate>
+
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLive}" Value="True">
+                                <Setter Property="Foreground" Value="IndianRed"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </TabControl.Resources>
+
+
+                <TabControl.ItemTemplate>
+                    
                 <DataTemplate>
                     <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
@@ -67,10 +82,11 @@
                     <ContentControl Content="{Binding WebView}" />
                 </DataTemplate>
             </TabControl.ContentTemplate>
-            
-        </TabControl>
-            
-    </Grid>
+                
+            </TabControl>
+
+
+        </Grid>
 
     </Border>
 </Window>

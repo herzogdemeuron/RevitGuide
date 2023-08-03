@@ -9,12 +9,22 @@ namespace RevitGuide.Commands
 {
     public class RvtCommandManager
     {
-        public static List<RvtCommand> AllRvtCommands { get => GetRvtCommands(); }
-
-
-        private static List<RvtCommand> GetRvtCommands()
+/*        public static List<RvtCommand> _allRvtCommands;
+        public static List<RvtCommand> AllRvtCommands
         {
-            
+            get
+            {
+                if (_allRvtCommands == null)
+                {
+                    _allRvtCommands = GetAllRvtCommands();
+                }
+                return _allRvtCommands;
+            }
+        }*/
+
+/*        private static List<RvtCommand> GetAllRvtCommands()
+        {
+            for
             List<RvtCommand> rvtCommands = new List<RvtCommand>();
             foreach (PostableCommand command in mockCommandList)
             {
@@ -22,11 +32,6 @@ namespace RevitGuide.Commands
                 rvtCommands.Add(new RvtCommand(command));
             }
             return rvtCommands;
-        }
-        private static List<PostableCommand> mockCommandList = new List<PostableCommand>
-        {
-            PostableCommand.Room,
-            PostableCommand.Wall,
-        };
+        }*/
     }
 }

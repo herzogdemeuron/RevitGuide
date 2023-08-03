@@ -3,12 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:RevitGuide.Views"
         mc:Ignorable="d"
         
         d:DesignHeight="400" d:DesignWidth="600"
         Height="400" MinHeight="400"
         Width="600" MinWidth="600"
         
+        Title="Revit Guide Settings"
         Topmost="True"
         WindowStartupLocation="CenterScreen"
         
@@ -39,7 +41,7 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
-            <Label Content="REVIT GUIDE - TAB SETTINGS"
+            <Label Content="REVIT GUIDE - SETTINGS"
                    HorizontalAlignment="Center"
                    FontSize="9"
                    Foreground="Gray"
@@ -65,22 +67,28 @@
                 </TabControl.RenderTransform>
 
                 <TabItem x:Name="PageTabsTab"
-                         Header="PAGE TABS">
+                         Header="PAGE TABS"
+                         Style="{StaticResource SettingTabItemStyle}">
                     <Grid>
                         <DataGrid x:Name="TabSettingsDataGrid"
                                   RowHeight="25"
                                 ItemsSource="{Binding TabSettings,Mode=TwoWay}"
                                 MouseLeftButtonDown="DataGridMouseLeftButtonUp">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="NAME" Binding="{Binding Key}" Width="150"/>
-                                <DataGridTextColumn Header="PATH" Binding="{Binding Uri}" Width="*"/>
+                                <DataGridTextColumn Header="NAME" 
+                                                    Binding="{Binding Key}" 
+                                                    Width="150"/>
+                                <DataGridTextColumn Header="PATH" 
+                                                    Binding="{Binding Uri}" 
+                                                    Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                 </TabItem>
 
                 <TabItem x:Name="LiveGuideTab"
-                         Header="LIVE GUIDE">
+                         Header="LIVE GUIDE"
+                         Style="{StaticResource SettingTabItemStyle}">
                     <Grid>
                         <DataGrid x:Name="TriggerSettingsDataGrid"
                                     ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
@@ -91,22 +99,28 @@
                                                         Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ComboBox SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                      DisplayMemberPath="Name"
-                                                      ItemsSource="{Binding DataContext.AllCommands, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                          <views:SearchComboBox 
+                                                      IsEditable="True"
+                                                      IsTextSearchEnabled="False"
+                                                
+                                                      SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding AllRvtCmdCollection}"
+                                                      DisplayMemberPath="Name">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                         <StackPanel Height="40"
                                                                     ToolTip="{Binding Description}">
                                                             <TextBlock Text="{Binding Name}"/>
                                                             <TextBlock Text="{Binding Description}"
+                                                                       TextWrapping="WrapWithOverflow"
+                                                                       MaxWidth="150"
                                                                        FontSize="9"
                                                                        Foreground="Gray"/>
                                                         </StackPanel>
                                                     
                                                     </DataTemplate>
                                             </ComboBox.ItemTemplate>
-                                            </ComboBox>
+                                            </views:SearchComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>

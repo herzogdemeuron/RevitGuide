@@ -10,14 +10,15 @@ namespace RevitGuide.Settings
 {
     public class SettingsManager
     {
-        private SettingsHelper SettingsHelper = new SettingsHelper();
+        private SettingsHelper _settingsHelper;
         public List<ItemSetting> TabSettings { get; set; }
         public List<ItemSetting> TriggerSettings { get; set; }
 
-        public SettingsManager()
+        public SettingsManager(Document doc)
         {
-            TabSettings = SettingsHelper.GetTabSettings();
-            TriggerSettings = SettingsHelper.GetTriggerSettings();
+            _settingsHelper = new SettingsHelper(doc);
+            TabSettings = _settingsHelper.GetTabSettings();
+            TriggerSettings = _settingsHelper.GetTriggerSettings();
         }
 
         public void UpdateSettings(List<ItemSetting> tabSettings, List<ItemSetting> triggerSettings)
@@ -28,7 +29,7 @@ namespace RevitGuide.Settings
         }
         private void SetSettings()
         {
-            SettingsHelper.UpdateAllSettings(TabSettings, TriggerSettings);
+            _settingsHelper.UpdateAllSettings(TabSettings, TriggerSettings);
         }
     }
 }

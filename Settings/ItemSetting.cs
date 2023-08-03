@@ -1,9 +1,11 @@
 ﻿using Autodesk.Revit.UI;
-using System.Collections.Generic;
-using RevitGuide.Helpers;
 using RevitGuide.Commands;
+using RevitGuide.Helpers;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.IO;
+using System.Windows.Data;
 
 namespace RevitGuide.Settings
 {
@@ -37,11 +39,37 @@ namespace RevitGuide.Settings
             }
         }
 
+        public PostableCommand? PostableCommand
+        {
+            get => RvtCommand.Command;
+        }
+
+        public Uri ValidatedUri
+        {
+            get => UriHelper.StringToUri(Uri);
+        }
+
+        public ObservableCollection<RvtCommand> AllRvtCommands { get => new ObservableCollection<RvtCommand>(RvtCommandHelper.AllRvtCommands); }
+        private ICollectionView _allRvtCmdCollection = null;
+        public ICollectionView AllRvtCmdCollection
+        {
+            get
+            {
+                if (_allRvtCmdCollection == null && AllRvtCommands != null)
+                {
+                    _allRvtCmdCollection = CollectionViewSource.GetDefaultView(AllRvtCommands);
+                }
+
+                return _allRvtCmdCollection;
+            }
+        }
         public ItemSetting(string key = null , string uri = "")
         {
             Key = key;
             Uri = uri;
         }
+
+       
 
     }
 }

@@ -16,9 +16,11 @@ namespace RevitGuide.Helpers
     {
         private Schema _tabSchema;
         private Schema _triggerSchema;
+        private Document _doc;
 
-        public SettingsHelper()
+        public SettingsHelper(Document doc)
         {
+            _doc = doc;
             _tabSchema = GetSchema("TabSchema");
             _triggerSchema = GetSchema("TriggerSchema");
         }
@@ -35,7 +37,7 @@ namespace RevitGuide.Helpers
 
         public void UpdateAllSettings(List<ItemSetting> tabSettings, List<ItemSetting> triggerSettings)
         {
-            using (Transaction t = new Transaction(App.Doc, "Save Revit Guide settings"))
+            using (Transaction t = new Transaction(_doc, "Save Revit Guide settings"))
             {
                 t.Start();
                 SetSettings(_tabSchema, tabSettings);
@@ -46,7 +48,7 @@ namespace RevitGuide.Helpers
 
         private void SetSettings(Schema schema, List<ItemSetting> settings)
         {
-            Entity entity = App.Doc.ProjectInformation.GetEntity(schema);
+            Entity entity = _doc.ProjectInformation.GetEntity(schema);
             if (!entity.IsValid())
             {
                 entity = new Entity(schema);
@@ -54,12 +56,12 @@ namespace RevitGuide.Helpers
 
             entity.Set<IList<string>>("Keys", settings.Select(x => x.Key).ToList());
             entity.Set<IList<string>>("Uris", settings.Select(x => x.Uri).ToList());
-            App.Doc.ProjectInformation.SetEntity(entity);
+            _doc.ProjectInformation.SetEntity(entity);
         }
 
         private List<ItemSetting> GetSettings(Schema schema)
         {
-            Entity entity = App.Doc.ProjectInformation.GetEntity(schema);
+            Entity entity = _doc.ProjectInformation.GetEntity(schema);
 
             if (!entity.IsValid())
             {

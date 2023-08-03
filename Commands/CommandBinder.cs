@@ -1,54 +1,71 @@
-﻿using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Microsoft.Web.WebView2.Wpf;
+using RevitGuide.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace RevitGuide.Commands
 {
-    public static class CommandBinder
+    public  class CommandBinder
     {
-        public static WebView2 WebView = null;
+        private SettingsManager _settingsManager;
+        public  WebView2 WebView { get; set; }
+        private List<ItemSetting> _triggerSettings;
 
-        public static Dictionary<PostableCommand, string> PostableCommandDict = new Dictionary<PostableCommand, string>()
+        public  Dictionary<PostableCommand, string> PostableCommandDict = new Dictionary<PostableCommand, string>()
         {
             { PostableCommand.Filters , "https://www.youtube.com/embed/_EGaTbs5olM" },
             { PostableCommand.VisibilityOrGraphics , "https://camilion.eu/en/blog/2021-revit-30-reasons-if-you-cant-see-an-object/" },
             { PostableCommand.ExportIFC , @"file:///U:/Kejun_L/_934_DT/230426_RevitAssist/pdfs/IFC.pdf" }
         };
 
-        public static void Register()
+        public CommandBinder(Document doc)
+        {
+            _settingsManager = new SettingsManager(doc);
+            _triggerSettings = _settingsManager.TriggerSettings;
+        }
+
+        public  void Register()
         {
             try
             {
-                foreach (KeyValuePair<PostableCommand, String> item in PostableCommandDict)
+                foreach (ItemSetting triggerSetting in _triggerSettings)
                 {
-                    RevitCommandId commandId = RevitCommandId.LookupPostableCommandId(item.Key);
+                    PostableCommand? postableCommand = triggerSetting.PostableCommand;
+                    if (postableCommand == null)
+                    {
+                        continue;
+                    }
+                    RevitCommandId commandId = RevitCommandId.LookupPostableCommandId(postableCommand.Value);
                     UIControlledApplication uIControlledApplication = App.UICtrlApp;
                     AddInCommandBinding commandBinding = uIControlledApplication.CreateAddInCommandBinding(commandId);
                     
                     void BeforeCommandExecute(object sender, BeforeExecutedEventArgs e)
                     {
-                        TaskDialog.Show("test", "test");
-                        /* try
-                         {
-                             if (WebView != null)
-                             {
-                                 Debug.WriteLine("trying navigate");
-                                 WebView.CoreWebView2.Navigate(item.Value);
-                             }
+                        try
+                        {
+                            if (WebView != null)
+                            {
+                                string target = triggerSetting.ValidatedUri.ToString();
+                                if (WebView.CoreWebView2.Source == null || WebView.CoreWebView2.Source.ToString() != target)
+                                {
+                                    WebView.CoreWebView2.Navigate(target);
+                                }
+                            }
 
-                         }
-                         catch (Exception ex)
-                         {
+                        }
+                        catch (Exception ex)
+                        {
 
-                             Debug.WriteLine(ex);
-                         }*/
+                            Debug.WriteLine(ex);
+                        }
                     }
 
                     commandBinding.BeforeExecuted += BeforeCommandExecute;
-                    Debug.WriteLine("registered");
+                    Debug.WriteLine($"registered {triggerSetting.Key}");
                 }
             }
             catch (Exception ex)

@@ -9,13 +9,15 @@ using System.Collections.Generic;
 using System.Security.Policy;
 using RevitGuide.Views;
 using System.IO;
+using Autodesk.Revit.DB;
+using RevitGuide.Helpers;
 
 namespace RevitGuide.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private SettingsManager _settingsManager;
-        private string DataFolderPath = App.DataFolderPath23; 
+        private string DataFolderPath = App.DataFolderPath23;
         private ObservableCollection<TabItemViewModel> _tabs;
         public ObservableCollection<TabItemViewModel> Tabs
         {
@@ -37,9 +39,9 @@ namespace RevitGuide.ViewModels
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(Document doc)
         {
-            _settingsManager = new SettingsManager();
+            _settingsManager = new SettingsManager(doc);
             UpdateTabs();
         }
 
@@ -55,8 +57,10 @@ namespace RevitGuide.ViewModels
                 {
                     continue;
                 }
-                AddTab(Tabs, tabSetting.Key, tabSetting.Uri);
+                AddTab(Tabs, tabSetting.Key, tabSetting.ValidatedUri);
             }
+            //add the live guide tab
+            AddTab(Tabs, "Live Guide", UriHelper.LiveGuidePageUri, true);
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
         }
@@ -83,13 +87,14 @@ namespace RevitGuide.ViewModels
             }
         }
 
-        private void AddTab(ObservableCollection<TabItemViewModel> tabs, string header, string url)
+        private void AddTab(ObservableCollection<TabItemViewModel> tabs, string header, Uri uri, bool isLive = false)
         {
             TabItemViewModel tab = new TabItemViewModel
             {
                 FolderPath = DataFolderPath,
                 Title = header,
-                Url = Validate(url),
+                Uri = uri,
+                IsLive = isLive
             };
             tab.InitWbv2();
             tabs.Add(tab);
@@ -108,35 +113,7 @@ namespace RevitGuide.ViewModels
         }
 
 
-        private Uri Validate(string uri)
-        {
 
-            if (File.Exists(uri))
-            {
-                return new Uri(uri);
-            }
-
-            if (uri == "")
-            {
-                return new Uri(App.DataFolderPath23 + "first_page.html");
-            }
-            else if (Uri.TryCreate(uri, UriKind.Absolute, out Uri result))
-            {
-                return result;
-            }
-            else if (Uri.TryCreate("http://" + uri, UriKind.Absolute, out result))
-            {
-                return result;
-            }
-            else if (Uri.TryCreate("https://" + uri, UriKind.Absolute, out result))
-            {
-                return result;
-            }
-            else
-            {
-                return new Uri(App.DataFolderPath23 + "invalid_page.html");
-            }
-        }
 
         public void HandleConfigClicked()
         {

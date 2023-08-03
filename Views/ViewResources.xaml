@@ -32,6 +32,15 @@
                 <DropShadowEffect BlurRadius="10" Color="Black" Opacity="0.2"/>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="10" Color="Black" Opacity="0.05"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="DataGrid">
@@ -54,10 +63,8 @@
         <Setter Property="BorderThickness" Value="1,0,0,1"/>
     </Style>
 
-
-
-
-    <Style TargetType="{x:Type TabItem}">
+    <Style TargetType="{x:Type TabItem}"
+           x:Key="SettingTabItemStyle">
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>

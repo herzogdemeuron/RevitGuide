@@ -12,21 +12,24 @@ namespace RevitGuide.Commands
 {
     public class RvtCommand
     {
-        public PostableCommand Command { get; }
-        public string Name { get => Command.ToString(); }
+        public PostableCommand? Command { get; }
+        public string Name { get; }
         public string Description { get; }
+
         public RvtCommand(PostableCommand command)
         {
             Command = command;
+            Name = command.ToString();
             Description = RvtCommandHelper.GetDescription(command.ToString());
         }
 
         public RvtCommand(string commandName)
         {
-            PostableCommand command = RvtCommandHelper.GetPostableCommandByString(commandName);
-            Command = command;
+            Command = RvtCommandHelper.GetPostableCommandByString(commandName);
+            Name = commandName;
             Description = RvtCommandHelper.GetDescription(commandName);
         }
+
         public override bool Equals(object obj)
         {
             if (obj is RvtCommand other)
