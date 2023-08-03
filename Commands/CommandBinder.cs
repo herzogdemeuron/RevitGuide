@@ -50,8 +50,11 @@ namespace RevitGuide.Commands
                             if (WebView != null)
                             {
                                 string target = triggerSetting.ValidatedUri.ToString();
-                                if (WebView.CoreWebView2.Source == null || WebView.CoreWebView2.Source.ToString() != target)
+                                if (WebView.CoreWebView2.Source == null || 
+                                    WebView.CoreWebView2.Source.ToString().Replace("www.","").Replace("WWW.", "") != target.Replace("www.", "").Replace("WWW.", ""))
                                 {
+                                    //TaskDialog.Show("caution",$"source {WebView.CoreWebView2.Source}");
+                                    //TaskDialog.Show("caution", $"target {target}");
                                     WebView.CoreWebView2.Navigate(target);
                                 }
                             }

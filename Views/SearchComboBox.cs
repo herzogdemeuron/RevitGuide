@@ -46,9 +46,9 @@ namespace RevitGuide.Views
             // Set the caret to the end of the text
             editableTextBox.CaretIndex = editableTextBox.Text.Length;
             // deselect all text
-            //IsDropDownOpen = true;
-            editableTextBox.SelectionLength = 0;
-            editableTextBox.SelectionBrush = null;
+            IsDropDownOpen = true;
+            //editableTextBox.SelectionLength = 0;
+            //editableTextBox.SelectionBrush = null;
         }
         private void EditableTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

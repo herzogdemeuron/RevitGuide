@@ -26,9 +26,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ViewResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
-
     </Window.Resources>
 
     <Border>
@@ -99,45 +97,40 @@
                                                         Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ComboBox   IsEditable="True"
-                                                        IsTextSearchEnabled="False"
-                                                        Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                              
-                                                        SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                        ItemsSource="{Binding FilteredRvtCommands,UpdateSourceTrigger=PropertyChanged}"
-                                                        DisplayMemberPath="Name">
-                                                <ComboBox.Triggers>
-                                                    <EventTrigger RoutedEvent="TextBoxBase.TextChanged">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsDropDownOpen">
-                                                                    <DiscreteBooleanKeyFrame Value="True" KeyTime="0:0:0"/>
-                                                                </BooleanAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </ComboBox.Triggers>
-                                                <ComboBox.ItemTemplate>
+                                          <views:SearchComboBox 
+                                                      IsEditable="True"
+                                                      IsTextSearchEnabled="False"
+
+                                                      SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding AllRvtCmdCollection}"
+                                                      DisplayMemberPath="Name">
+                                            <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                         <StackPanel Height="40"
                                                                     ToolTip="{Binding Description}">
                                                             <TextBlock Text="{Binding Name}"/>
                                                             <TextBlock Text="{Binding Description}"
                                                                        TextWrapping="WrapWithOverflow"
-                                                                       MaxWidth="150"
+                                                                       HorizontalAlignment="Left"
+                                                                       MaxWidth="200"
                                                                        FontSize="9"
                                                                        Foreground="Gray"/>
                                                         </StackPanel>
-                                                    
                                                     </DataTemplate>
                                             </ComboBox.ItemTemplate>
-                                            </ComboBox>
+                                            </views:SearchComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="PATH" Binding="{Binding Uri}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        
+                    <TextBlock Text="Synchronize and reopen revit to apply changes."
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    FontSize="9"
+                    Foreground="IndianRed"/>
                     </Grid>
                 </TabItem>
             </TabControl>
@@ -158,9 +151,11 @@
                     Click="OnCloseClicked"/>
             </StackPanel>
 
+      
+
             <StackPanel Grid.Row="1"
-                    Orientation="Vertical"
-                    VerticalAlignment="Bottom"
+                        Orientation="Vertical"
+                        VerticalAlignment="Bottom"
                         HorizontalAlignment="Left">
                 <StackPanel Margin="0,0,0,20">
                     <Button x:Name="AddButton" Content="+" Margin="0,0,0,5" Click="AddItemClicked"/>

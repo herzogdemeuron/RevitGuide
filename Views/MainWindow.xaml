@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         
-        d:DesignHeight="550" d:DesignWidth="400"
-        Height="600" MinHeight="600"
-        Width="400" MinWidth="400"
+        d:DesignHeight="660" d:DesignWidth="500"
+        Height="650" MinHeight="650"
+        Width="550" MinWidth="550"
         
         Title="Revit Guide"
         Topmost="True"

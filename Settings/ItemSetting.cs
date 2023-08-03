@@ -5,13 +5,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows.Data;
-using System.Linq;
 
 namespace RevitGuide.Settings
 {
-    public class ItemSetting : INotifyPropertyChanged
+    public class ItemSetting
     {
         private string _key;
         public string Key
@@ -51,64 +49,29 @@ namespace RevitGuide.Settings
             get => UriHelper.StringToUri(Uri);
         }
 
-
         private ObservableCollection<RvtCommand> _allRvtCommands;
-        public ObservableCollection<RvtCommand> AllRvtCommands
+
+        private ICollectionView _allRvtCmdCollection;
+        public ICollectionView AllRvtCmdCollection
         {
-            get { return _allRvtCommands; }
-            set
+            get
             {
-                if(value != _allRvtCommands)
+                if (_allRvtCmdCollection == null && _allRvtCommands != null)
                 {
-                    _allRvtCommands = value;
-                    OnPropertyChanged(nameof(AllRvtCommands));
+                    _allRvtCmdCollection = CollectionViewSource.GetDefaultView(_allRvtCommands);
                 }
+
+                return _allRvtCmdCollection;
             }
         }
-
-
-        private ObservableCollection<RvtCommand> _filteredRvtCommands;
-        public ObservableCollection<RvtCommand> FilteredRvtCommands
-        {
-            get { return _filteredRvtCommands; }
-            set
-            {
-                if(value != _filteredRvtCommands)
-                {
-                    _filteredRvtCommands = value;
-                    OnPropertyChanged(nameof(FilteredRvtCommands));
-                }
-            }
-        }
-
-        private string _searchText;
-        public string SearchText
-        {
-            get { return _searchText; }
-            set
-            {
-                if(value != _searchText)
-                {
-                    _searchText = value;
-                    OnPropertyChanged(nameof(SearchText));
-                    FilteredRvtCommands = new ObservableCollection<RvtCommand>(AllRvtCommands.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
-                }
-            }
-        }
-
         public ItemSetting(string key = null , string uri = "")
         {
             Key = key;
             Uri = uri;
-            AllRvtCommands = new ObservableCollection<RvtCommand>(RvtCommandHelper.AllRvtCommands);
+            _allRvtCommands = new ObservableCollection<RvtCommand>(RvtCommandHelper.AllRvtCommands);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+       
 
     }
 }

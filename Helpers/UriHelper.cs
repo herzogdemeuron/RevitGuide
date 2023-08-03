@@ -28,11 +28,11 @@ namespace RevitGuide.Helpers
             {
                 return result;
             }
-            else if (Uri.TryCreate("http://" + uriString, UriKind.Absolute, out result))
+            else if (Uri.TryCreate("https://" + uriString, UriKind.Absolute, out result))
             {
                 return result;
             }
-            else if (Uri.TryCreate("https://" + uriString, UriKind.Absolute, out result))
+            else if (Uri.TryCreate("http://" + uriString, UriKind.Absolute, out result))
             {
                 return result;
             }

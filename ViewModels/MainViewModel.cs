@@ -49,6 +49,7 @@ namespace RevitGuide.ViewModels
         {
             
             List<ItemSetting> tabSettings = _settingsManager.TabSettings;
+            List<ItemSetting> triggerSettings = _settingsManager.TriggerSettings;
             ClearAllTabs();
             
             foreach (ItemSetting tabSetting in tabSettings)
@@ -59,8 +60,11 @@ namespace RevitGuide.ViewModels
                 }
                 AddTab(Tabs, tabSetting.Key, tabSetting.ValidatedUri);
             }
-            //add the live guide tab
-            AddTab(Tabs, "Live Guide", UriHelper.LiveGuidePageUri, true);
+            if(triggerSettings.Count > 0)
+            {
+                //add the live guide tab
+                AddTab(Tabs, "Live Guide", UriHelper.LiveGuidePageUri, true);
+            }
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
         }
