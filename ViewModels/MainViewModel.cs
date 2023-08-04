@@ -1,21 +1,22 @@
-﻿using RevitGuide.Settings;
+﻿using Autodesk.Revit.DB;
+using RevitGuide.Helpers;
+using RevitGuide.Settings;
+using RevitGuide.Views;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Collections.Generic;
-using System.Security.Policy;
-using RevitGuide.Views;
-using System.IO;
 
 namespace RevitGuide.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private SettingsManager _settingsManager;
-        private string DataFolderPath = App.DataFolderPath23; 
+
         private ObservableCollection<TabItemViewModel> _tabs;
         public ObservableCollection<TabItemViewModel> Tabs
         {
@@ -37,25 +38,31 @@ namespace RevitGuide.ViewModels
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(Document doc)
         {
-            _settingsManager = new SettingsManager();
+            _settingsManager = new SettingsManager(doc);
             UpdateTabs();
         }
 
         private void UpdateTabs()
         {
             
-            List<TabSetting> tabSettings = _settingsManager.TabSettings;
+            List<ItemSetting> tabSettings = _settingsManager.TabSettings;
+            List<ItemSetting> triggerSettings = _settingsManager.TriggerSettings;
             ClearAllTabs();
             
-            foreach (TabSetting tabSetting in tabSettings)
+            foreach (ItemSetting tabSetting in tabSettings)
             {
-                if (tabSetting.TabName == "")
+                if (tabSetting.Key == null)
                 {
                     continue;
                 }
-                AddTab(Tabs, tabSetting.TabName, tabSetting.TabUrl);
+                AddTab(Tabs, tabSetting.Key, tabSetting.ValidatedUri);
+            }
+            if(triggerSettings.Count > 0)
+            {
+                //add the live guide tab
+                AddTab(Tabs, "LIVE GUIDE", UriHelper.LiveGuidePageUri, true);
             }
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
@@ -63,10 +70,10 @@ namespace RevitGuide.ViewModels
 
         private void CleanDataFolders()
         {
-            if (!Directory.Exists(DataFolderPath)) return;
+            if (!Directory.Exists(App.DataFolderPath23)) return;
 
             List<string> activeDataFolders = Tabs.Select(tab => tab.FolderPath).ToList();
-            string[] existingDataFolders = Directory.GetDirectories(DataFolderPath);
+            string[] existingDataFolders = Directory.GetDirectories(App.DataFolderPath23);
             foreach (string folder in existingDataFolders)
             {
                 if (!activeDataFolders.Contains(folder))
@@ -83,13 +90,14 @@ namespace RevitGuide.ViewModels
             }
         }
 
-        private void AddTab(ObservableCollection<TabItemViewModel> tabs, string header, string url)
+        private void AddTab(ObservableCollection<TabItemViewModel> tabs, string header, Uri uri, bool isLive = false)
         {
             TabItemViewModel tab = new TabItemViewModel
             {
-                FolderPath = DataFolderPath,
+                FolderPath = App.DataFolderPath23,
                 Title = header,
-                Url = Validate(url),
+                Uri = uri,
+                IsLive = isLive
             };
             tab.InitWbv2();
             tabs.Add(tab);
@@ -107,49 +115,15 @@ namespace RevitGuide.ViewModels
             Tabs = new ObservableCollection<TabItemViewModel>();
         }
 
-
-        private Uri Validate(string uri)
-        {
-
-            if (File.Exists(uri))
-            {
-                return new Uri(uri);
-            }
-
-            if (uri == "")
-            {
-                return new Uri(App.DataFolderPath23 + "first_page.html");
-            }
-            else if (Uri.TryCreate(uri, UriKind.Absolute, out Uri result))
-            {
-                return result;
-            }
-            else if (Uri.TryCreate("http://" + uri, UriKind.Absolute, out result))
-            {
-                return result;
-            }
-            else if (Uri.TryCreate("https://" + uri, UriKind.Absolute, out result))
-            {
-                return result;
-            }
-            else
-            {
-                return new Uri(App.DataFolderPath23 + "invalid_page.html");
-            }
-        }
-
         public void HandleConfigClicked()
         {
             SettingsWindow settingsWindow = new SettingsWindow(_settingsManager);
             bool? result = settingsWindow.ShowDialog();
             if (result == true)
             {
-                UpdateTabs();
-                
+                UpdateTabs(); 
             }
         }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,7 +1,6 @@
-﻿using Autodesk.Revit.UI;
-using Microsoft.Web.WebView2.Core;
+﻿using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
-using RevitGuide.Views;
+using RevitGuide.Commands;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -34,13 +33,13 @@ namespace RevitGuide.ViewModels
             var environment = await CoreWebView2Environment.CreateAsync(null, TabItemModel.FolderPath, new CoreWebView2EnvironmentOptions("--kiosk-printing"));
             await WebView2.EnsureCoreWebView2Async(environment);
             Debug.WriteLine(" webv2 initiated");
-            WebView2.Source = TabItemModel.Url;
+            WebView2.Source = TabItemModel.Uri;
             WebView2.ZoomFactor = 0.7f;
             WebView2.CoreWebView2.NewWindowRequested += NewWindowRequested;
 
-            if (TabItemModel.Title == "Live Guide")
+            if (TabItemModel.IsLive)
             {
-                CommandBinder.WebView = WebView2;
+                App.CommandBinder.WebView = WebView2;
             }
         }
 
@@ -48,11 +47,6 @@ namespace RevitGuide.ViewModels
         {
             WebView2.CoreWebView2.NewWindowRequested -= NewWindowRequested;
             WebView2.Dispose();
-        }
-
-        private void NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
-        {
-
         }
 
         void NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)

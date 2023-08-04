@@ -3,57 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RevitGuide.ViewModels"
+        xmlns:views="clr-namespace:RevitGuide.Views" 
+        xmlns:viewmodels="clr-namespace:RevitGuide.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
         mc:Ignorable="d"
+        
+        d:DesignHeight="400" d:DesignWidth="600"
+        Height="400" MinHeight="400"
+        Width="600" MinWidth="600"
+        
+        Title="Revit Guide Settings"
         Topmost="True"
-        Title="Tab Settings"
-        Height="400"
-        Width="600"
         WindowStartupLocation="CenterScreen"
+        
         ResizeMode="CanResizeWithGrip"
         BorderThickness="1"
         BorderBrush="#00FFFFFF" 
         AllowsTransparency="True"
         Background="#00FFFFFF"
         WindowStyle="None">
-    
+
     <Window.Resources>
-        <Style TargetType="{x:Type ResizeGrip}">
-            <Setter Property="Margin"  Value="8"/>
-        </Style>
-
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="20"/>
-            <Setter Property="Height" Value="20"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="DarkGray"/>
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ContentPresenter Content="{Binding}" Margin="0,-1,0,0"/>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ViewResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
-    <Border 
-        Background="WhiteSmoke"
-        Margin="10"
-        BorderBrush="DarkGray"
-		BorderThickness="1"
-        UseLayoutRounding="True">
-        <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.25"/>
-        </Border.Effect>
 
+    <Border>
         <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="*"/>
-
-            </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
@@ -62,8 +41,7 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
-            <Label Content="REVIT GUIDE - TAB SETTINGS"
-                   Grid.Column="2"
+            <Label Content="REVIT GUIDE - SETTINGS"
                    HorizontalAlignment="Center"
                    FontSize="9"
                    Foreground="Gray"
@@ -79,24 +57,84 @@
                         Click="OnCloseClicked"/>
             </StackPanel>
 
-            <DataGrid x:Name="TabSettingsDataGrid"
-                        Grid.Row="1"
-                        Grid.Column="2"
+            <TabControl Grid.Row="1"
                         Margin="0,5,0,0"
-                      ItemsSource="{Binding TabSettings,Mode=TwoWay}"
-                      AutoGenerateColumns="False"
-                      SelectionMode="Extended"
-                      CanUserAddRows="True"
-                      CanUserDeleteRows="True"
-                      MouseLeftButtonDown="DataGridMouseLeftButtonUp" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="NAME" Binding="{Binding TabName}" Width="150"/>
-                    <DataGridTextColumn Header="PATH" Binding="{Binding TabUrl}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                        TabStripPlacement="Left"
+                        SelectionChanged="TabSelectionChanged">
+
+                <TabControl.RenderTransform>
+                    <RotateTransform Angle="0"/>
+                </TabControl.RenderTransform>
+
+                <TabItem x:Name="PageTabsTab"
+                         Header="PAGE TABS"
+                         Style="{StaticResource SettingTabItemStyle}">
+                    <Grid>
+                        <DataGrid x:Name="TabSettingsDataGrid"
+                                  RowHeight="25"
+                                ItemsSource="{Binding TabSettings,Mode=TwoWay}"
+                                MouseLeftButtonDown="DataGridMouseLeftButtonUp">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="NAME" 
+                                                    Binding="{Binding Key}" 
+                                                    Width="150"
+                                                    ElementStyle="{StaticResource DataGridTextBlock}"/>
+                                <DataGridTextColumn Header="PATH" 
+                                                    Binding="{Binding Uri}" 
+                                                    Width="*"
+                                                    ElementStyle="{StaticResource DataGridTextBlock}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem x:Name="LiveGuideTab"
+                         Header="LIVE GUIDE"
+                         Style="{StaticResource SettingTabItemStyle}">
+                    <Grid>
+                        <DataGrid x:Name="TriggerSettingsDataGrid"
+                                    ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
+                                    RowHeight="25"
+                                    MouseLeftButtonDown="DataGridMouseLeftButtonUp">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="COMMAND" 
+                                                        Width="150">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <views:SearchComboBox 
+                                                      SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                      ItemsSource="{Binding AllRvtCmdCollection}"
+                                                      DisplayMemberPath="Name">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Height="40"
+                                                                    ToolTip="{Binding Description}">
+                                                            <TextBlock Text="{Binding Name}"/>
+                                                            <TextBlock Text="{Binding Description}"
+                                                                       HorizontalAlignment="Left"
+                                                                       MaxWidth="200"
+                                                                       FontSize="9"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       Foreground="Gray"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </views:SearchComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="PATH" 
+                                                    Binding="{Binding Uri}" 
+                                                    Width="*"
+                                                    ElementStyle="{StaticResource DataGridTextBlock}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
 
             <StackPanel Grid.Row="3"
-                    Grid.Column="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
                 <Button x:Name="ConfirmButton"
@@ -111,9 +149,9 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Orientation="Vertical"
-                    VerticalAlignment="Center">
+                        Orientation="Vertical"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left">
                 <StackPanel Margin="0,0,0,20">
                     <Button x:Name="AddButton" Content="+" Margin="0,0,0,5" Click="AddItemClicked"/>
                     <Button x:Name="RemoveButton" Content="-" Click="DeleteItemClicked"/>
@@ -123,6 +161,14 @@
                     <Button x:Name="DownButton" Content="▾" Click="MovedownClicked"/>
                 </StackPanel>
             </StackPanel>
+
+            <TextBlock Grid.Row="3"
+                        Text="Synchronize and reopen revit to apply Live Guide changes."
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        FontSize="9"
+                        Margin="0,0,150,5"
+                        Foreground="IndianRed"/>
 
         </Grid>
     </Border>

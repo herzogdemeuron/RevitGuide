@@ -3,7 +3,7 @@ using Autodesk.Revit.UI;
 using System;
 using System.Diagnostics;
 
-namespace RevitGuide
+namespace RevitGuide.Revit
 {
     [Transaction(TransactionMode.Manual)]
     public class ExternalEventHandler : IExternalEventHandler

@@ -1,4 +1,5 @@
-﻿using RevitGuide.ViewModels;
+﻿using Autodesk.Revit.DB;
+using RevitGuide.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 
@@ -8,9 +9,9 @@ namespace RevitGuide.Views
     {
         private MainViewModel _viewModel;
 
-        public MainWindow()
+        public MainWindow(Document doc)
         {
-            _viewModel = new MainViewModel();
+            _viewModel = new MainViewModel(doc);
             this.DataContext = _viewModel;
             InitializeComponent();
         }

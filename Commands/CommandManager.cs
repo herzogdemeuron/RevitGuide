@@ -1,14 +1,8 @@
-﻿using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.UI;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RevitGuide
+namespace RevitGuide.Commands
 {
     public class CommandManager
     {

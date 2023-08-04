@@ -1,11 +1,12 @@
 ﻿using Autodesk.Revit.UI;
+using RevitGuide.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Media.Imaging;
 
-namespace RevitGuide
+namespace RevitGuide.Revit
 {
     public class RibbonMaker
     {
@@ -17,10 +18,9 @@ namespace RevitGuide
                 "RevitGuideButton",
                 "Revit Guide",
                 Assembly.GetExecutingAssembly().Location,
-                "RevitGuide.StartCommand");
+                "RevitGuide.Revit.StartCommand");
             PushButton button = panel.AddItem(buttonData) as PushButton;
-            Uri uriImage = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
-            button.LargeImage = new BitmapImage(uriImage);
+            button.LargeImage = new BitmapImage(UriHelper.IconUri);
         }
 
 
