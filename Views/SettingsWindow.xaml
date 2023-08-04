@@ -100,7 +100,9 @@
                         <DataGrid x:Name="TriggerSettingsDataGrid"
                                     ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
                                     RowHeight="25"
-                                    MouseLeftButtonDown="DataGridMouseLeftButtonUp">
+                                    MouseLeftButtonDown="DataGridMouseLeftButtonUp"
+                                    EnableRowVirtualization="False"
+                                    EnableColumnVirtualization="False">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="COMMAND" 
                                                         Width="150">

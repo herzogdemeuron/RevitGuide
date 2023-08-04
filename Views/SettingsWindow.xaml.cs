@@ -2,7 +2,6 @@
 using RevitGuide.Settings;
 using RevitGuide.ViewModels;
 using System.Collections.Generic;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,7 +9,6 @@ using System.Windows.Media;
 
 namespace RevitGuide.Views
 {
-
     public partial class SettingsWindow : Window
     {
         private SettingsViewModel _settingsViewModel;
@@ -63,6 +61,7 @@ namespace RevitGuide.Views
             {
                 _activeDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
                 _activeDataGrid.SelectedItem = null;
+                Keyboard.ClearFocus();
             }
         }
 

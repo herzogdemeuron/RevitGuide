@@ -29,7 +29,6 @@ namespace RevitGuide.Commands
             {
                 return other.Name == Name;
             }
-
             return false;
         }
 

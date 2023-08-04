@@ -67,9 +67,6 @@ namespace RevitGuide.Settings
             Key = key;
             Uri = uri;
             _allRvtCommands = new ObservableCollection<RvtCommand>(RvtCommandHelper.AllRvtCommands);
-        }
-
-       
-
+        }   
     }
 }

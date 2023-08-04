@@ -1,6 +1,7 @@
 ﻿using RevitGuide.Commands;
 using System;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -8,33 +9,26 @@ namespace RevitGuide.Views
 {
     public class SearchComboBox : ComboBox
     {
-        TextBox editableTextBox;
-
+        TextBox _editableTextBox;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            _editableTextBox = GetTemplateChild("PART_EditableTextBox") as TextBox;
             this.IsTextSearchEnabled = false;
             this.IsEditable = true;
-            editableTextBox = GetTemplateChild("PART_EditableTextBox") as TextBox;
-            if (editableTextBox != null)
+
+            if (_editableTextBox != null)
             {
-                editableTextBox.TextChanged += EditableTextBox_TextChanged;
-                editableTextBox.PreviewTextInput += EditableTextBox_PreviewTextInput;
+                _editableTextBox.TextChanged += EditableTextBox_TextChanged;
+                _editableTextBox.GotFocus += EditableTextBox_GotFocus;
             }
         }
 
-        private void EditableTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void EditableTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
-            if (editableTextBox.SelectionLength == editableTextBox.Text.Length)
-            {
-                editableTextBox.Text = e.Text;
-            }
-            else
-            {
-                editableTextBox.Text += e.Text;
-            }
-            editableTextBox.CaretIndex = editableTextBox.Text.Length;
+            string text = _editableTextBox.Text;
+            this.SelectedIndex = -1;
+            _editableTextBox.Text = text;
             IsDropDownOpen = true;
         }
 
@@ -42,13 +36,13 @@ namespace RevitGuide.Views
         {
             if (ItemsSource is ICollectionView ICV)
             {
-                if (string.IsNullOrEmpty(editableTextBox.Text.Trim()))
+                if (string.IsNullOrEmpty(_editableTextBox.Text.Trim()))
                 {
                     ICV.Filter = null;
                 }
                 else
                 {
-                    ICV.Filter = new Predicate<object>(i => ((RvtCommand)i).Name.ToLower().Contains(editableTextBox.Text.ToLower()));
+                    ICV.Filter = new Predicate<object>(i => ((RvtCommand)i).Name.ToLower().Contains(_editableTextBox.Text.ToLower()));
                 }
             }
         }
