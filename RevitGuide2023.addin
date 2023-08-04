@@ -6,5 +6,6 @@
     <AddInId>4cfa42d4-2899-433c-925c-62e29e74f98d</AddInId>
     <FullClassName>RevitGuide.App</FullClassName>
     <VendorId>HdMDT</VendorId>
+    <VendorDescription>HdM DT</VendorDescription>
   </AddIn>
 </RevitAddIns>

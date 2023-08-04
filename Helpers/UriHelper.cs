@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace RevitGuide.Helpers
 {
@@ -43,6 +44,14 @@ namespace RevitGuide.Helpers
                 return InvalidPageUri;
             }
 
+        }
+
+        public static void OpenGithubPage()
+        {
+            string url = "https://github.com/herzogdemeuron/revit-guide";
+            System.Diagnostics.Process.Start(
+                new System.Diagnostics.ProcessStartInfo("cmd", $"/c start {url.Replace("&", "^&")}") { CreateNoWindow = true }
+                );
         }
     }
 }

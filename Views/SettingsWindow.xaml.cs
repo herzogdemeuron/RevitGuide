@@ -2,6 +2,7 @@
 using RevitGuide.Settings;
 using RevitGuide.ViewModels;
 using System.Collections.Generic;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -96,6 +97,11 @@ namespace RevitGuide.Views
         {
             base.OnMouseLeftButtonDown(e);
             this.DragMove();
+        }
+
+        private void OnInfoClicked(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/herzogdemeuron/revit-guide");
         }
         private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
