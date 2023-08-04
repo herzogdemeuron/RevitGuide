@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:RevitGuide.Views"
+        xmlns:views="clr-namespace:RevitGuide.Views" 
+        xmlns:viewmodels="clr-namespace:RevitGuide.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
         mc:Ignorable="d"
         
         d:DesignHeight="400" d:DesignWidth="600"
@@ -59,7 +61,7 @@
                         Margin="0,5,0,0"
                         TabStripPlacement="Left"
                         SelectionChanged="TabSelectionChanged">
-                
+
                 <TabControl.RenderTransform>
                     <RotateTransform Angle="0"/>
                 </TabControl.RenderTransform>
@@ -72,13 +74,16 @@
                                   RowHeight="25"
                                 ItemsSource="{Binding TabSettings,Mode=TwoWay}"
                                 MouseLeftButtonDown="DataGridMouseLeftButtonUp">
+
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="NAME" 
                                                     Binding="{Binding Key}" 
-                                                    Width="150"/>
+                                                    Width="150"
+                                                    ElementStyle="{StaticResource DataGridTextBlock}"/>
                                 <DataGridTextColumn Header="PATH" 
                                                     Binding="{Binding Uri}" 
-                                                    Width="*"/>
+                                                    Width="*"
+                                                    ElementStyle="{StaticResource DataGridTextBlock}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -90,52 +95,44 @@
                     <Grid>
                         <DataGrid x:Name="TriggerSettingsDataGrid"
                                     ItemsSource="{Binding TriggerSettings,Mode=TwoWay}"
-                                    RowHeight="35"
+                                    RowHeight="25"
                                     MouseLeftButtonDown="DataGridMouseLeftButtonUp">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="COMMAND" 
                                                         Width="150">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                          <views:SearchComboBox 
-                                                      IsEditable="True"
-                                                      IsTextSearchEnabled="False"
-
+                                            <views:SearchComboBox 
                                                       SelectedItem="{Binding RvtCommand, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                       ItemsSource="{Binding AllRvtCmdCollection}"
                                                       DisplayMemberPath="Name">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
                                                         <StackPanel Height="40"
                                                                     ToolTip="{Binding Description}">
                                                             <TextBlock Text="{Binding Name}"/>
                                                             <TextBlock Text="{Binding Description}"
-                                                                       TextWrapping="WrapWithOverflow"
                                                                        HorizontalAlignment="Left"
                                                                        MaxWidth="200"
                                                                        FontSize="9"
+                                                                       TextTrimming="CharacterEllipsis"
                                                                        Foreground="Gray"/>
                                                         </StackPanel>
                                                     </DataTemplate>
-                                            </ComboBox.ItemTemplate>
+                                                </ComboBox.ItemTemplate>
                                             </views:SearchComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="PATH" Binding="{Binding Uri}" Width="*"/>
+                                <DataGridTextColumn Header="PATH" 
+                                                    Binding="{Binding Uri}" 
+                                                    Width="*"
+                                                    ElementStyle="{StaticResource DataGridTextBlock}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        
-                    <TextBlock Text="Synchronize and reopen revit to apply changes."
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    FontSize="9"
-                    Foreground="IndianRed"/>
                     </Grid>
                 </TabItem>
             </TabControl>
-
-           
 
             <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
@@ -151,8 +148,6 @@
                     Click="OnCloseClicked"/>
             </StackPanel>
 
-      
-
             <StackPanel Grid.Row="1"
                         Orientation="Vertical"
                         VerticalAlignment="Bottom"
@@ -166,6 +161,14 @@
                     <Button x:Name="DownButton" Content="▾" Click="MovedownClicked"/>
                 </StackPanel>
             </StackPanel>
+
+            <TextBlock Grid.Row="3"
+                        Text="Synchronize and reopen revit to apply Live Guide changes."
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        FontSize="9"
+                        Margin="0,0,150,5"
+                        Foreground="IndianRed"/>
 
         </Grid>
     </Border>

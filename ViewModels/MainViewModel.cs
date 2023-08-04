@@ -1,23 +1,22 @@
-﻿using RevitGuide.Settings;
+﻿using Autodesk.Revit.DB;
+using RevitGuide.Helpers;
+using RevitGuide.Settings;
+using RevitGuide.Views;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Collections.Generic;
-using System.Security.Policy;
-using RevitGuide.Views;
-using System.IO;
-using Autodesk.Revit.DB;
-using RevitGuide.Helpers;
 
 namespace RevitGuide.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private SettingsManager _settingsManager;
-        private string DataFolderPath = App.DataFolderPath23;
+
         private ObservableCollection<TabItemViewModel> _tabs;
         public ObservableCollection<TabItemViewModel> Tabs
         {
@@ -63,7 +62,7 @@ namespace RevitGuide.ViewModels
             if(triggerSettings.Count > 0)
             {
                 //add the live guide tab
-                AddTab(Tabs, "Live Guide", UriHelper.LiveGuidePageUri, true);
+                AddTab(Tabs, "LIVE GUIDE", UriHelper.LiveGuidePageUri, true);
             }
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
@@ -71,10 +70,10 @@ namespace RevitGuide.ViewModels
 
         private void CleanDataFolders()
         {
-            if (!Directory.Exists(DataFolderPath)) return;
+            if (!Directory.Exists(App.DataFolderPath23)) return;
 
             List<string> activeDataFolders = Tabs.Select(tab => tab.FolderPath).ToList();
-            string[] existingDataFolders = Directory.GetDirectories(DataFolderPath);
+            string[] existingDataFolders = Directory.GetDirectories(App.DataFolderPath23);
             foreach (string folder in existingDataFolders)
             {
                 if (!activeDataFolders.Contains(folder))
@@ -95,7 +94,7 @@ namespace RevitGuide.ViewModels
         {
             TabItemViewModel tab = new TabItemViewModel
             {
-                FolderPath = DataFolderPath,
+                FolderPath = App.DataFolderPath23,
                 Title = header,
                 Uri = uri,
                 IsLive = isLive
@@ -116,9 +115,6 @@ namespace RevitGuide.ViewModels
             Tabs = new ObservableCollection<TabItemViewModel>();
         }
 
-
-
-
         public void HandleConfigClicked()
         {
             SettingsWindow settingsWindow = new SettingsWindow(_settingsManager);
@@ -128,8 +124,6 @@ namespace RevitGuide.ViewModels
                 UpdateTabs(); 
             }
         }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

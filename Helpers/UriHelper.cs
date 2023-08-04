@@ -9,9 +9,11 @@ namespace RevitGuide.Helpers
 {
     public class UriHelper
     {
+        public static Uri IconUri = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
         public static Uri FirstPageUri = new Uri(App.DataFolderPath23 + "first_page.html");
         public static Uri InvalidPageUri = new Uri(App.DataFolderPath23 + "invalid_page.html");
         public static Uri LiveGuidePageUri = new Uri(App.DataFolderPath23 + "live_guide_page.html");
+        
 
         public static Uri StringToUri(string uriString)
         {

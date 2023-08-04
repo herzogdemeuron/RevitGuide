@@ -1,6 +1,4 @@
-﻿using Autodesk.Revit.UI;
-using RevitGuide.Commands;
-using RevitGuide.Helpers;
+﻿using RevitGuide.Helpers;
 using RevitGuide.Settings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +13,6 @@ namespace RevitGuide.ViewModels
         private SettingsManager _settingsManager;
         public bool IsTabSettingsActive { get; set; } = true;
 
-        public static List<RvtCommand> AllCommands { get => RvtCommandHelper.AllRvtCommands; } 
         public ObservableCollection<ItemSetting> ActiveSettings
         {
             get=> IsTabSettingsActive ? TabSettings : TriggerSettings;
@@ -102,6 +99,7 @@ namespace RevitGuide.ViewModels
                 ActiveSettings.Insert(index + delta, itemSetting);
                 selectedTabs.Add(itemSetting);
             }
+            //let ui restore selection
             Mediator.Broadcast("UpdateDataGridSelection", selectedTabs);
         }
 
@@ -110,7 +108,6 @@ namespace RevitGuide.ViewModels
         {
             _settingsManager.UpdateSettings(TabSettings.ToList(), TriggerSettings.ToList());
         }
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;

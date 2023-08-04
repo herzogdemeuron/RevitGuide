@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.UI;
+using RevitGuide.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,7 @@ namespace RevitGuide.Revit
                 Assembly.GetExecutingAssembly().Location,
                 "RevitGuide.Revit.StartCommand");
             PushButton button = panel.AddItem(buttonData) as PushButton;
-            Uri uriImage = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
-            button.LargeImage = new BitmapImage(uriImage);
+            button.LargeImage = new BitmapImage(UriHelper.IconUri);
         }
 
 

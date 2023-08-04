@@ -12,15 +12,8 @@ namespace RevitGuide.Commands
     public  class CommandBinder
     {
         private SettingsManager _settingsManager;
-        public  WebView2 WebView { get; set; }
         private List<ItemSetting> _triggerSettings;
-
-        public  Dictionary<PostableCommand, string> PostableCommandDict = new Dictionary<PostableCommand, string>()
-        {
-            { PostableCommand.Filters , "https://www.youtube.com/embed/_EGaTbs5olM" },
-            { PostableCommand.VisibilityOrGraphics , "https://camilion.eu/en/blog/2021-revit-30-reasons-if-you-cant-see-an-object/" },
-            { PostableCommand.ExportIFC , @"file:///U:/Kejun_L/_934_DT/230426_RevitAssist/pdfs/IFC.pdf" }
-        };
+        public  WebView2 WebView { get; set; }
 
         public CommandBinder(Document doc)
         {
@@ -42,7 +35,7 @@ namespace RevitGuide.Commands
                     RevitCommandId commandId = RevitCommandId.LookupPostableCommandId(postableCommand.Value);
                     UIControlledApplication uIControlledApplication = App.UICtrlApp;
                     AddInCommandBinding commandBinding = uIControlledApplication.CreateAddInCommandBinding(commandId);
-                    
+
                     void BeforeCommandExecute(object sender, BeforeExecutedEventArgs e)
                     {
                         try
@@ -53,8 +46,6 @@ namespace RevitGuide.Commands
                                 if (WebView.CoreWebView2.Source == null || 
                                     WebView.CoreWebView2.Source.ToString().Replace("www.","").Replace("WWW.", "") != target.Replace("www.", "").Replace("WWW.", ""))
                                 {
-                                    //TaskDialog.Show("caution",$"source {WebView.CoreWebView2.Source}");
-                                    //TaskDialog.Show("caution", $"target {target}");
                                     WebView.CoreWebView2.Navigate(target);
                                 }
                             }
@@ -68,7 +59,6 @@ namespace RevitGuide.Commands
                     }
 
                     commandBinding.BeforeExecuted += BeforeCommandExecute;
-                    Debug.WriteLine($"registered {triggerSetting.Key}");
                 }
             }
             catch (Exception ex)

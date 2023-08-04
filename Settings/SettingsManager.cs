@@ -1,10 +1,6 @@
-﻿using Autodesk.Revit.DB.ExtensibleStorage;
-using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.DB;
 using RevitGuide.Helpers;
+using System.Collections.Generic;
 
 namespace RevitGuide.Settings
 {

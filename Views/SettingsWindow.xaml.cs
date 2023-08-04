@@ -2,13 +2,10 @@
 using RevitGuide.Settings;
 using RevitGuide.ViewModels;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Autodesk.Revit.DB;
 
 namespace RevitGuide.Views
 {

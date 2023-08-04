@@ -106,10 +106,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandBinder.cs" />
-    <Compile Include="Commands\CommandDescriptions.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\RvtCommand.cs" />
-    <Compile Include="Commands\RvtCommandManager.cs" />
     <Compile Include="Helpers\Mediator.cs" />
     <Compile Include="Helpers\RvtCommandHelper.cs" />
     <Compile Include="Helpers\SettingsHelper.cs" />

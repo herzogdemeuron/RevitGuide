@@ -4,7 +4,6 @@ using RevitGuide.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Data;
 
 namespace RevitGuide.Settings
@@ -34,8 +33,7 @@ namespace RevitGuide.Settings
             get => new RvtCommand(Key);
             set
             {
-
-                Key = value.Name;
+               Key = value?.Name??null;
             }
         }
 

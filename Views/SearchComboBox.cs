@@ -1,11 +1,6 @@
 ﻿using RevitGuide.Commands;
-using RevitGuide.Settings;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -18,7 +13,8 @@ namespace RevitGuide.Views
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
+            this.IsTextSearchEnabled = false;
+            this.IsEditable = true;
             editableTextBox = GetTemplateChild("PART_EditableTextBox") as TextBox;
             if (editableTextBox != null)
             {
@@ -26,30 +22,22 @@ namespace RevitGuide.Views
                 editableTextBox.PreviewTextInput += EditableTextBox_PreviewTextInput;
             }
         }
+
         private void EditableTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-
             e.Handled = true;
-
-            // Check if the entire text is selected
             if (editableTextBox.SelectionLength == editableTextBox.Text.Length)
             {
-                // Replace the text
                 editableTextBox.Text = e.Text;
             }
             else
             {
-                // Append the new text to the existing text
                 editableTextBox.Text += e.Text;
             }
-
-            // Set the caret to the end of the text
             editableTextBox.CaretIndex = editableTextBox.Text.Length;
-            // deselect all text
             IsDropDownOpen = true;
-            //editableTextBox.SelectionLength = 0;
-            //editableTextBox.SelectionBrush = null;
         }
+
         private void EditableTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (ItemsSource is ICollectionView ICV)
