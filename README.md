@@ -14,18 +14,22 @@ Revit Guide serves as an integrated web browser for team collaboration within Re
 *All settings are stored in the Revit file, shared by team members in the same project.*
 ### **🤹🏼‍♂️ Interactive Handbook:**
 *(Coming soon) Make interactive documentation on any pages, call Revit commands directly between the lines.*
+
   
 # Quick Glance
+
 ### Tabs for Displaying Various Content
-(screenshot)
+![Tab](https://github.com/herzogdemeuron/revit-guide/blob/master/screenshots/main.JPG?raw=true)
 
 ### Live Guide in Action
-(screenshot)
+![Live Guide](https://github.com/herzogdemeuron/revit-guide/blob/master/screenshots/live%20guide.gif?raw=true)
 
-### Settings Overview
-(screenshot)
+### Tab Settings
+![Tab Settings](https://github.com/herzogdemeuron/revit-guide/blob/master/screenshots/tab%20settings.JPG?raw=true)
+
+### Live Guide Settings
+![Live Guide Settings](https://github.com/herzogdemeuron/revit-guide/blob/master/screenshots/live%20guide%20settings.JPG?raw=true)
 
 ## Installation
 - [Revit 2023](https://github.com/herzogdemeuron/revit-guide/releases/download/v0.0.2/RevitGuide2023.msi)
-
-Supporting more Revit versions soon!
+- Supporting more Revit versions soon!
