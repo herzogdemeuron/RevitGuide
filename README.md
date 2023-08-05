@@ -1,8 +1,8 @@
 # Revit Guide 🦮  
 
-Revit Guide serves as an integrated web browser for team collaboration within Revit, allowing access to a variety of external content right from the application. Think of it as your guidebook and so much more!
+Revit Guide serves as an integrated content browser for team collaboration within Revit, allowing access to a variety of external content right from the application. Think of it as your revit guidebook and so much more!
 
-# Key Features
+## Key Features
 
 ### **🖥️ Multi-tab Interface**
 *Open and view different content sources side by side.*
@@ -15,8 +15,11 @@ Revit Guide serves as an integrated web browser for team collaboration within Re
 ### **🤹🏼‍♂️ Interactive Handbook:**
 *(Coming soon) Make interactive documentation on any pages, call Revit commands directly between the lines.*
 
+## Installation
+- [Revit 2023](https://github.com/herzogdemeuron/revit-guide/releases/download/v0.0.2/RevitGuide2023.msi)
+- Supporting more Revit versions soon!
   
-# Quick Glance
+## Quick Glance
 
 ### Tabs for Displaying Various Content
 ![Tab](https://github.com/herzogdemeuron/revit-guide/blob/master/screenshots/main.JPG?raw=true)
@@ -30,6 +33,4 @@ Revit Guide serves as an integrated web browser for team collaboration within Re
 ### Live Guide Settings
 ![Live Guide Settings](https://github.com/herzogdemeuron/revit-guide/blob/master/screenshots/live%20guide%20settings.JPG?raw=true)
 
-## Installation
-- [Revit 2023](https://github.com/herzogdemeuron/revit-guide/releases/download/v0.0.2/RevitGuide2023.msi)
-- Supporting more Revit versions soon!
+
