@@ -7,10 +7,10 @@ Revit Guide serves as an integrated content browser for team collaboration withi
 ### **🖥️ Multi-tab Interface**
 *Open and view different content sources side by side.*
 ### **📑 Broad format Support**
-*Handles web links, PDFs, images - anything that can be browsed with an Edge Browser.*
+*Handles web links, local PDFs and images - anything that can be browsed with an Edge Browser.*
 ### **📖 Live Guide:**
 *Delivers content based on specific Revit commands.*
-### **🛠️ Shared Settings:**
+### **🛠️ Settings Shared:**
 *All settings are stored in the Revit file, shared by team members in the same project.*
 ### **🤹🏼‍♂️ Interactive Handbook:**
 *(Coming soon) Make interactive documentation on any pages, call Revit commands directly between the lines.*
