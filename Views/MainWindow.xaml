@@ -53,27 +53,16 @@
 
 
             <TabControl x:Name="TabContainer"
-                    Margin="0,20,0,0"
+                    Margin="0,25,0,0"
                     ItemsSource="{Binding Tabs}"
-                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
-
-                <TabControl.Resources>
-                    <Style TargetType="TabItem">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLive}" Value="True">
-                                <Setter Property="Foreground" Value="IndianRed"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
-                            </DataTrigger>
-
-                        </Style.Triggers>
-                    </Style>
-                </TabControl.Resources>
+                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                        Style="{StaticResource MainTabControlStyle}"
+                        ItemContainerStyle="{StaticResource MainTabItemStyle}">
 
 
-                <TabControl.ItemTemplate>
-                    
-                <DataTemplate>
-                    <TextBlock Text="{Binding Title}" />
+            <TabControl.ItemTemplate>
+                    <DataTemplate>
+                    <TextBlock Text="{Binding Title}"/>
                 </DataTemplate>
             </TabControl.ItemTemplate>
 

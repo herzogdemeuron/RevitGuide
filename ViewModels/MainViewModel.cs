@@ -62,7 +62,7 @@ namespace RevitGuide.ViewModels
             if(triggerSettings.Count > 0)
             {
                 //add the live guide tab
-                AddTab(Tabs, "LIVE GUIDE", UriHelper.LiveGuidePageUri, true);
+                AddTab(Tabs, "LIVE", UriHelper.LiveGuidePageUri, true);
             }
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
