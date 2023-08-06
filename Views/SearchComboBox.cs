@@ -1,10 +1,8 @@
 ﻿using RevitGuide.Commands;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace RevitGuide.Views
 {
@@ -29,18 +27,20 @@ namespace RevitGuide.Views
         {
             base.OnDropDownOpened(e);
             this.IsEditable = true;
+            if(_editableTextBox == null)
+            {
+                this.ApplyTemplate();
+            }            
         }
 
         protected override void OnDropDownClosed(EventArgs e)
         {
             base.OnDropDownClosed(e);
 
-            if (this.Items.Count > 0)
+            if (this.Items.Count > 0 && _editableTextBox.Text.Trim() != string.Empty)
             {
                 this.SelectedIndex = 0;
             }
-
-            _editableTextBox.Text = this.SelectedValue?.ToString();
             this.IsEditable = false;
         }
         private void EditableTextBox_GotFocus(object sender, RoutedEventArgs e)
