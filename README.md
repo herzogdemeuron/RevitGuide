@@ -16,7 +16,7 @@ Revit Guide serves as an integrated content browser for team collaboration withi
 *(Coming soon) Make interactive documentation on any pages, call Revit commands directly between the lines.*
 
 ## Installation
-- [Revit 2023](https://github.com/herzogdemeuron/revit-guide/releases/download/v0.0.2/RevitGuide2023.msi)
+- [Revit 2023](https://github.com/herzogdemeuron/revit-guide/releases/download/v0.0.3/RevitGuide2023.msi)
 - Supporting more Revit versions soon!
   
 ## Quick Glance
