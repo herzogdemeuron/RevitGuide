@@ -145,6 +145,7 @@
                                     Panel.ZIndex="1"
                                     Margin="-2,0,1,-1"
                                     IsItemsHost="True"
+                                   LastChildFill="False"
                                    Height="25"
                                     Background="Transparent"/>
 
