@@ -37,7 +37,7 @@ namespace RevitGuide.ViewModels
             WebView2.ZoomFactor = 0.7f;
             WebView2.CoreWebView2.NewWindowRequested += NewWindowRequested;
 
-            if (TabItemModel.IsLive)
+            if (TabItemModel.IsLive && (App.CommandBinder != null))
             {
                 App.CommandBinder.WebView = WebView2;
             }
