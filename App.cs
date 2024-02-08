@@ -14,7 +14,8 @@ namespace RevitGuide
         public static UIControlledApplication UICtrlApp;
         public static CommandBinder CommandBinder;
         public static ExternalEventHandler ExEventHandler = new ExternalEventHandler();
-        public readonly static string DataFolderPath23 = @"C:\ProgramData\Autodesk\Revit\Addins\2023\RevitGuide\Data\";
+
+        public readonly static string DataFolderPath23 = Path.Combine("C:\\HdM-DT\\RevitCSharpExtensions\\RevitGuide", "Data");
         public Result OnStartup(UIControlledApplication uiCtrlApp)
         {
             AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
@@ -40,6 +41,7 @@ namespace RevitGuide
         Assembly OnResolveAssembly(object sender, ResolveEventArgs args)
         {
             string directoryDLLs = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            
             string pathAssembly = Path.Combine(directoryDLLs, new AssemblyName(args.Name).Name + ".dll");
             if (File.Exists(pathAssembly))
             {
