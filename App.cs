@@ -15,7 +15,7 @@ namespace RevitGuide
         public static CommandBinder CommandBinder;
         public static ExternalEventHandler ExEventHandler = new ExternalEventHandler();
 
-        public readonly static string DataFolderPath23 = Path.Combine("C:\\HdM-DT\\RevitCSharpExtensions\\RevitGuide", "Data");
+        public readonly static string DataFolderPath23 = Path.Combine("C:\\HdM-DT\\RevitCSharpExtensions\\RevitGuide\\bin", "Data");
         public Result OnStartup(UIControlledApplication uiCtrlApp)
         {
             AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
