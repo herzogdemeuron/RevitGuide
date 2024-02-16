@@ -1,6 +1,7 @@
 ﻿using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace RevitGuide.ViewModels
@@ -16,7 +17,7 @@ namespace RevitGuide.ViewModels
         private string _folderPath;
         public string FolderPath
         {
-            get => _folderPath + Title;
+            get => Path.Combine(_folderPath, Title);
             set
             {
                 _folderPath = value;

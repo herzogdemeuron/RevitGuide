@@ -62,7 +62,7 @@ namespace RevitGuide.ViewModels
             if(triggerSettings.Count > 0)
             {
                 //add the live guide tab
-                AddTab(Tabs, "LIVE GUIDE", UriHelper.LiveGuidePageUri, true);
+                AddTab(Tabs, "LIVE", UriHelper.LiveGuidePageUri, true);
             }
             CleanDataFolders();
             SelectedTab = Tabs.FirstOrDefault();
@@ -70,10 +70,10 @@ namespace RevitGuide.ViewModels
 
         private void CleanDataFolders()
         {
-            if (!Directory.Exists(App.DataFolderPath23)) return;
+            if (!Directory.Exists(App.DataFolderPath)) return;
 
             List<string> activeDataFolders = Tabs.Select(tab => tab.FolderPath).ToList();
-            string[] existingDataFolders = Directory.GetDirectories(App.DataFolderPath23);
+            string[] existingDataFolders = Directory.GetDirectories(App.DataFolderPath);
             foreach (string folder in existingDataFolders)
             {
                 if (!activeDataFolders.Contains(folder))
@@ -94,7 +94,7 @@ namespace RevitGuide.ViewModels
         {
             TabItemViewModel tab = new TabItemViewModel
             {
-                FolderPath = App.DataFolderPath23,
+                FolderPath = App.DataFolderPath,
                 Title = header,
                 Uri = uri,
                 IsLive = isLive
@@ -105,6 +105,13 @@ namespace RevitGuide.ViewModels
 
         public void ClearAllTabs()
         {
+            Dispose();
+
+            Tabs = new ObservableCollection<TabItemViewModel>();
+        }
+
+        public void Dispose()
+        {
             if (Tabs != null)
             {
                 foreach (TabItemViewModel tab in Tabs)
@@ -112,7 +119,6 @@ namespace RevitGuide.ViewModels
                     tab.Dispose();
                 }
             }
-            Tabs = new ObservableCollection<TabItemViewModel>();
         }
 
         public void HandleConfigClicked()
@@ -122,6 +128,19 @@ namespace RevitGuide.ViewModels
             if (result == true)
             {
                 UpdateTabs(); 
+            }
+        }
+
+        public void HandleOpenClicked()
+        {
+            if (SelectedTab == null || SelectedTab.Uri == null) return;
+            try
+            {
+                Process.Start(SelectedTab.Uri.ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
         }
 

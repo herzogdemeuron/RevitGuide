@@ -42,9 +42,15 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Orientation="Horizontal">
-                
+
+                <Button Content="🌐"
+                        Click="OnOpenClicked"
+                        ToolTip="Open with default browser"
+                        Margin="0,0,3,0"/>
+
                 <Button Content="⚙"
                         Click="OnConfigClicked"
+                        ToolTip="Settings"
                         Margin="0,0,3,0"/>
 
                 <Button Content="✕"
@@ -53,33 +59,22 @@
 
 
             <TabControl x:Name="TabContainer"
-                    Margin="0,20,0,0"
+                    Margin="0,25,0,0"
                     ItemsSource="{Binding Tabs}"
-                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
-
-                <TabControl.Resources>
-                    <Style TargetType="TabItem">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLive}" Value="True">
-                                <Setter Property="Foreground" Value="IndianRed"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
-                            </DataTrigger>
-
-                        </Style.Triggers>
-                    </Style>
-                </TabControl.Resources>
+                    SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                        Style="{StaticResource MainTabControlStyle}"
+                        ItemContainerStyle="{StaticResource MainTabItemStyle}">
 
 
-                <TabControl.ItemTemplate>
-                    
-                <DataTemplate>
-                    <TextBlock Text="{Binding Title}" />
+            <TabControl.ItemTemplate>
+                    <DataTemplate>
+                    <TextBlock Text="{Binding Title}"/>
                 </DataTemplate>
             </TabControl.ItemTemplate>
 
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding WebView}" />
+                    <ContentControl Content="{Binding WebView}"/>
                 </DataTemplate>
             </TabControl.ContentTemplate>
                 
