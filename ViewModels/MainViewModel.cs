@@ -70,10 +70,10 @@ namespace RevitGuide.ViewModels
 
         private void CleanDataFolders()
         {
-            if (!Directory.Exists(App.DataFolderPath23)) return;
+            if (!Directory.Exists(App.DataFolderPath)) return;
 
             List<string> activeDataFolders = Tabs.Select(tab => tab.FolderPath).ToList();
-            string[] existingDataFolders = Directory.GetDirectories(App.DataFolderPath23);
+            string[] existingDataFolders = Directory.GetDirectories(App.DataFolderPath);
             foreach (string folder in existingDataFolders)
             {
                 if (!activeDataFolders.Contains(folder))
@@ -94,7 +94,7 @@ namespace RevitGuide.ViewModels
         {
             TabItemViewModel tab = new TabItemViewModel
             {
-                FolderPath = App.DataFolderPath23,
+                FolderPath = App.DataFolderPath,
                 Title = header,
                 Uri = uri,
                 IsLive = isLive

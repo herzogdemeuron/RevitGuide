@@ -6,14 +6,12 @@ namespace RevitGuide.Helpers
 {
     public class UriHelper
     {
-        private static string dataDirectory = App.DataFolderPath23;
+        private static string dataDirectory = App.DataFolderPath;
         public static Uri IconUri = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
         public static Uri FirstPageUri = new Uri(Path.Combine(dataDirectory,"first_page.html"));
         public static Uri InvalidPageUri = new Uri(Path.Combine(dataDirectory,"invalid_page.html"));
         public static Uri LiveGuidePageUri = new Uri(Path.Combine(dataDirectory,"live_guide_page.html"));
-        public static Uri PostableCommandUri = new Uri(Path.Combine(dataDirectory,"PostableCommands2023.json"));
         
-
         public static Uri StringToUri(string uriString)
         {
             if (File.Exists(uriString))

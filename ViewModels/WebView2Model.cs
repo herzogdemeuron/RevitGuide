@@ -32,7 +32,7 @@ namespace RevitGuide.ViewModels
             };
             var environment = await CoreWebView2Environment.CreateAsync(null, TabItemModel.FolderPath, new CoreWebView2EnvironmentOptions("--kiosk-printing"));
             await WebView2.EnsureCoreWebView2Async(environment);
-            Debug.WriteLine(" webv2 initiated");
+            Debug.WriteLine("webv2 initiated");
             WebView2.Source = TabItemModel.Uri;
             WebView2.ZoomFactor = 0.7f;
             WebView2.CoreWebView2.NewWindowRequested += NewWindowRequested;

@@ -5,6 +5,7 @@ using RevitGuide.Revit;
 using System;
 using System.Reflection;
 using System.IO;
+using System.Diagnostics;
 
 namespace RevitGuide
 {
@@ -14,8 +15,8 @@ namespace RevitGuide
         public static UIControlledApplication UICtrlApp;
         public static CommandBinder CommandBinder;
         public static ExternalEventHandler ExEventHandler = new ExternalEventHandler();
-
-        public readonly static string DataFolderPath23 = Path.Combine("C:\\HdM-DT\\RevitCSharpExtensions\\RevitGuide\\bin", "Data");
+        public readonly static string DllPath = "C:\\HdM-DT\\RevitCSharpExtensions\\RevitGuide\\bin";
+        public readonly static string DataFolderPath = Path.Combine(DllPath, "Data");
         public Result OnStartup(UIControlledApplication uiCtrlApp)
         {
             AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
@@ -41,7 +42,6 @@ namespace RevitGuide
         Assembly OnResolveAssembly(object sender, ResolveEventArgs args)
         {
             string directoryDLLs = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            
             string pathAssembly = Path.Combine(directoryDLLs, new AssemblyName(args.Name).Name + ".dll");
             if (File.Exists(pathAssembly))
             {
