@@ -27,6 +27,11 @@ namespace RevitGuide.Views
             _viewModel.HandleConfigClicked();
         }
 
+        private void OnOpenClicked(object sender, RoutedEventArgs e)
+        {
+            _viewModel.HandleOpenClicked();
+        }
+
         private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
             _viewModel.ClearAllTabs();

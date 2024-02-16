@@ -42,9 +42,15 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Orientation="Horizontal">
-                
+
+                <Button Content="🌐"
+                        Click="OnOpenClicked"
+                        ToolTip="Open with default browser"
+                        Margin="0,0,3,0"/>
+
                 <Button Content="⚙"
                         Click="OnConfigClicked"
+                        ToolTip="Settings"
                         Margin="0,0,3,0"/>
 
                 <Button Content="✕"
@@ -68,7 +74,7 @@
 
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding WebView}" />
+                    <ContentControl Content="{Binding WebView}"/>
                 </DataTemplate>
             </TabControl.ContentTemplate>
                 

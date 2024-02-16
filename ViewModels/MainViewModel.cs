@@ -105,6 +105,13 @@ namespace RevitGuide.ViewModels
 
         public void ClearAllTabs()
         {
+            Dispose();
+
+            Tabs = new ObservableCollection<TabItemViewModel>();
+        }
+
+        public void Dispose()
+        {
             if (Tabs != null)
             {
                 foreach (TabItemViewModel tab in Tabs)
@@ -112,7 +119,6 @@ namespace RevitGuide.ViewModels
                     tab.Dispose();
                 }
             }
-            Tabs = new ObservableCollection<TabItemViewModel>();
         }
 
         public void HandleConfigClicked()
@@ -122,6 +128,19 @@ namespace RevitGuide.ViewModels
             if (result == true)
             {
                 UpdateTabs(); 
+            }
+        }
+
+        public void HandleOpenClicked()
+        {
+            if (SelectedTab == null || SelectedTab.Uri == null) return;
+            try
+            {
+                Process.Start(SelectedTab.Uri.ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
         }
 
