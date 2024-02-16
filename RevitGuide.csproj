@@ -151,7 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="Resources\Data\PostableCommands2023.json">
+    <Content Include="Data\PostableCommands2023.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
@@ -165,13 +165,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\Data\first_page.html">
+    <Content Include="Data\first_page.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Data\invalid_page.html">
+    <Content Include="Data\invalid_page.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Data\live_guide_page.html">
+    <Content Include="Data\live_guide_page.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
