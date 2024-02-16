@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 
+using System.Reflection;
+
 
 namespace RevitGuide.Helpers
 {
@@ -74,8 +76,12 @@ namespace RevitGuide.Helpers
         }
         private static Dictionary<string, string> GetPostableCommandDict23()
         {
-            string path = App.DataFolderPath23 + "PostableCommands2023.json";
-            string json = File.ReadAllText(path);
+            string dataDirectory = App.DataFolderPath + "/PostableCommands2023.json";
+            if(!File.Exists(dataDirectory))
+            {
+                return new Dictionary<string, string>();
+            }
+            string json = File.ReadAllText(dataDirectory);
             Dictionary<string, string> commands = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             return commands;
         }

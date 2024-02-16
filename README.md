@@ -4,19 +4,19 @@ Revit Guide serves as an integrated content browser for team collaboration withi
 
 ## Key Features
 
-### **🖥️ Multi-tab Interface**
+### **🗃️ Multi-tab Interface**
 *Open and view different content sources side by side.*
-### **📑 Broad format Support**
-*Handles web links, PDFs, images - anything that can be browsed with an Edge Browser.*
-### **📖 Live Guide:**
+### **🧩 Broad format Support**
+*Handles web links, local PDFs and images - anything that can be browsed with an Edge Browser.*
+### **📺 Live Guide:**
 *Delivers content based on specific Revit commands.*
-### **🛠️ Shared Settings:**
+### **🛠️ Settings Shared:**
 *All settings are stored in the Revit file, shared by team members in the same project.*
 ### **🤹🏼‍♂️ Interactive Handbook:**
 *(Coming soon) Make interactive documentation on any pages, call Revit commands directly between the lines.*
 
 ## Installation
-- [Revit 2023](https://github.com/herzogdemeuron/revit-guide/releases/download/v0.0.2/RevitGuide2023.msi)
+- [Revit 2023](https://github.com/herzogdemeuron/revit-guide/releases/download/v0.0.3/RevitGuide2023.msi)
 - Supporting more Revit versions soon!
   
 ## Quick Glance

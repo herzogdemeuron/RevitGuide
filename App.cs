@@ -2,6 +2,10 @@
 using Autodesk.Revit.UI;
 using RevitGuide.Commands;
 using RevitGuide.Revit;
+using System;
+using System.Reflection;
+using System.IO;
+using System.Diagnostics;
 
 namespace RevitGuide
 {
@@ -11,13 +15,15 @@ namespace RevitGuide
         public static UIControlledApplication UICtrlApp;
         public static CommandBinder CommandBinder;
         public static ExternalEventHandler ExEventHandler = new ExternalEventHandler();
-        public readonly static string DataFolderPath23 = @"C:\ProgramData\Autodesk\Revit\Addins\2023\RevitGuide\Data\";
+        public readonly static string DllPath = "C:\\HdM-DT\\RevitCSharpExtensions\\RevitGuide\\bin";
+        public readonly static string DataFolderPath = Path.Combine(DllPath, "Data");
         public Result OnStartup(UIControlledApplication uiCtrlApp)
         {
-                UICtrlApp = uiCtrlApp;
-                RibbonMaker.Create(uiCtrlApp, "HdM", "HOME");
-                uiCtrlApp.ControlledApplication.DocumentOpened += OnDocumentOpened;
-                return Result.Succeeded;
+            AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
+            UICtrlApp = uiCtrlApp;
+            RibbonMaker.Create(uiCtrlApp, "HdM", "HOME");
+            uiCtrlApp.ControlledApplication.DocumentOpened += OnDocumentOpened;
+            return Result.Succeeded;
         }
         public Result OnShutdown(UIControlledApplication application)
         {
@@ -32,6 +38,16 @@ namespace RevitGuide
                 CommandBinder = new CommandBinder(args.Document);
                 CommandBinder.Register();
             }
+        }
+        Assembly OnResolveAssembly(object sender, ResolveEventArgs args)
+        {
+            string directoryDLLs = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string pathAssembly = Path.Combine(directoryDLLs, new AssemblyName(args.Name).Name + ".dll");
+            if (File.Exists(pathAssembly))
+            {
+                return Assembly.LoadFrom(pathAssembly);
+            }
+            return null;
         }
     }
 }

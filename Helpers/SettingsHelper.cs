@@ -22,7 +22,7 @@ namespace RevitGuide.Helpers
 
         public List<ItemSetting> GetTabSettings()
         { 
-            return GetSettings(_tabSchema);
+            return GetSettings(_tabSchema, new ItemSetting("First Tab",""));
         }
 
         public List<ItemSetting> GetTriggerSettings()
@@ -54,16 +54,20 @@ namespace RevitGuide.Helpers
             _doc.ProjectInformation.SetEntity(entity);
         }
 
-        private List<ItemSetting> GetSettings(Schema schema)
+        private List<ItemSetting> GetSettings(Schema schema, ItemSetting defaultSetting = null)
         {
             Entity entity = _doc.ProjectInformation.GetEntity(schema);
 
             if (!entity.IsValid())
             {
-                return new List<ItemSetting>
+                if (defaultSetting == null)
                 {
-                    new ItemSetting("First Tab", "")
-                };
+                    return new List<ItemSetting> { };
+                }
+                else
+                {
+                    return new List<ItemSetting> { defaultSetting };
+                }
             }
             List<ItemSetting> settings = new List<ItemSetting> { };
             var entityKeys = entity.Get<IList<string>>("Keys").ToList();

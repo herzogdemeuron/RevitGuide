@@ -1,16 +1,17 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 
 namespace RevitGuide.Helpers
 {
     public class UriHelper
     {
+        private static string dataDirectory = App.DataFolderPath;
         public static Uri IconUri = new Uri("pack://application:,,,/RevitGuide;component/Resources/icon.png", UriKind.Absolute);
-        public static Uri FirstPageUri = new Uri(App.DataFolderPath23 + "first_page.html");
-        public static Uri InvalidPageUri = new Uri(App.DataFolderPath23 + "invalid_page.html");
-        public static Uri LiveGuidePageUri = new Uri(App.DataFolderPath23 + "live_guide_page.html");
+        public static Uri FirstPageUri = new Uri(Path.Combine(dataDirectory,"first_page.html"));
+        public static Uri InvalidPageUri = new Uri(Path.Combine(dataDirectory,"invalid_page.html"));
+        public static Uri LiveGuidePageUri = new Uri(Path.Combine(dataDirectory,"live_guide_page.html"));
         
-
         public static Uri StringToUri(string uriString)
         {
             if (File.Exists(uriString))

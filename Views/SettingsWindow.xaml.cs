@@ -108,6 +108,15 @@ namespace RevitGuide.Views
             Close();
         }
 
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.DialogResult = false;
+                Close();
+            }
+        }
+
         private List<int> GetDatagridSelectedIndices()
         {
             List<int> selectedIndices = new List<int>();
