@@ -22,6 +22,7 @@ namespace RevitGuide
             AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
             UICtrlApp = uiCtrlApp;
             RibbonMaker.Create(uiCtrlApp, "HdM", "HOME");
+
             uiCtrlApp.ControlledApplication.DocumentOpened += OnDocumentOpened;
             return Result.Succeeded;
         }
