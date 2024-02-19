@@ -42,6 +42,10 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Orientation="Horizontal">
+                <Button Content="🡠"
+                        Click="OnBackClicked"
+                        ToolTip="Back"
+                        Margin="0,0,3,0"/>
 
                 <Button Content="🌐"
                         Click="OnOpenClicked"

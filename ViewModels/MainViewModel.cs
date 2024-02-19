@@ -133,15 +133,23 @@ namespace RevitGuide.ViewModels
 
         public void HandleOpenClicked()
         {
-            if (SelectedTab == null || SelectedTab.Uri == null) return;
+            if (SelectedTab == null) return;
+            var currentUri = SelectedTab.GetCurrentUri();
+            if (currentUri == null) return;
             try
             {
-                Process.Start(SelectedTab.Uri.ToString());
+                Process.Start(currentUri.ToString());
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
+        }
+
+        public void HandleBackClicked()
+        {
+            if (SelectedTab == null) return;
+            SelectedTab.GoBack();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

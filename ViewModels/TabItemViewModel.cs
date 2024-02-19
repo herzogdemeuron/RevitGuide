@@ -10,6 +10,7 @@ namespace RevitGuide.ViewModels
     {
         public string Title { get; set; }
         public Uri Uri { get; set; }
+        // the current uri addrees got from the webview
         public WebView2 WebView { get; set; }
         public bool IsLive { get; set; } = false;
         public bool IsSpacer { get; set; } = false;
@@ -28,6 +29,19 @@ namespace RevitGuide.ViewModels
         {
             WebView2Model webView2Model = new WebView2Model(this);
             WebView = webView2Model.WebView2;
+        }
+
+        public Uri GetCurrentUri()
+        {
+            return WebView.Source??null;
+        }
+
+        public void GoBack()
+        {
+            if (WebView.CanGoBack)
+            {
+                WebView.GoBack();
+            }
         }
 
         public void Dispose()
