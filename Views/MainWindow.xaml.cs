@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.IO;
 using System.Diagnostics;
+using Autodesk.Revit.UI;
 
 namespace RevitGuide.Views
 {
@@ -18,8 +19,6 @@ namespace RevitGuide.Views
             _viewModel = new MainViewModel(doc);
             this.DataContext = _viewModel;
             InitializeComponent();
-            string directoryDLLs = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Debug.WriteLine("directoryDLLs: " + directoryDLLs);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

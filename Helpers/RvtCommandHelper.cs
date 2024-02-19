@@ -76,8 +76,8 @@ namespace RevitGuide.Helpers
         }
         private static Dictionary<string, string> GetPostableCommandDict23()
         {
-            string dataDirectory = App.DataFolderPath + "/PostableCommands2023.json";
-            if(!File.Exists(dataDirectory))
+            string dataDirectory = Path.Combine(App.DataFolderPath, "PostableCommands2023.json");
+            if (!File.Exists(dataDirectory))
             {
                 return new Dictionary<string, string>();
             }
