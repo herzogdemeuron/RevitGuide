@@ -131,6 +131,12 @@ namespace RevitGuide.ViewModels
             }
         }
 
+        public void HandleResetClicked()
+        {
+            if (SelectedTab == null) return;
+            SelectedTab.GoHome();
+        }
+
         public void HandleOpenClicked()
         {
             if (SelectedTab == null) return;

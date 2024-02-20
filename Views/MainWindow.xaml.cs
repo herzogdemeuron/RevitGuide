@@ -32,6 +32,11 @@ namespace RevitGuide.Views
             _viewModel.HandleConfigClicked();
         }
 
+        private void OnResetClicked(object sender, RoutedEventArgs e)
+        {
+            _viewModel.HandleResetClicked();
+        }
+
         private void OnOpenClicked(object sender, RoutedEventArgs e)
         {
             _viewModel.HandleOpenClicked();

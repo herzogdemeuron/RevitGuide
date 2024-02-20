@@ -12,6 +12,8 @@ namespace RevitGuide.Helpers
         private Schema _tabSchema;
         private Schema _triggerSchema;
         private Document _doc;
+        private readonly string _defaultTabTitle = "DT";
+        private readonly string _defaultTabPath = "https://herzogdemeuronnet.sharepoint.com/sites/934_DT/SitePages/Home.aspx";
 
         public SettingsHelper(Document doc)
         {
@@ -22,7 +24,7 @@ namespace RevitGuide.Helpers
 
         public List<ItemSetting> GetTabSettings()
         { 
-            return GetSettings(_tabSchema, new ItemSetting("First Tab",""));
+            return GetSettings(_tabSchema, new ItemSetting(_defaultTabTitle, _defaultTabPath));
         }
 
         public List<ItemSetting> GetTriggerSettings()
